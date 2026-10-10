@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "backdrop": "Portofolio",
+    "greeting": "Assalamualaikum",
+    "role": "Web Developer",
+    "intro": "Saya",
+    "firstName": "Solihul",
+    "lastName": "Hadi",
+    "skillLeft": "PHP + Javascript",
+    "skillRight": "Python",
+    "copyright": "Copyright Solihul Hadi All Rights Reserved",
+    "documentTitle": "Solihul Hadi | Web Developer",
+    "portraitAlt": "Solihul Hadi, Web Developer"
+  },
+  "navigation": {
+    "home": "Home",
+    "education": "Education",
+    "skills": "Skills",
+    "project": "Project",
+    "contact": "Contact"
+  }
+}

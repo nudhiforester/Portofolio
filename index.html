@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <!-- Metadata dasar untuk mesin pencari dan pratinjau halaman. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portofolio Solihul Hadi, Web Developer yang berfokus pada PHP, JavaScript, dan Python.">
+    <meta name="theme-color" content="#291b27">
+    <title>Solihul Hadi | Web Developer</title>
+
+    <!-- Ikon tab dan ikon aplikasi menggunakan aset favicon lokal. -->
+    <link rel="icon" href="assets/img/pavicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/pavicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/pavicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/pavicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/img/pavicon/site.webmanifest">
+
+    <!-- Semua font, ikon, dan stylesheet dimuat dari aset lokal. -->
+    <link rel="preload" href="assets/fonts/geologica/Geologica/static/Geologica-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="node_modules/remixicon/fonts/remixicon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- Isi main dimuat sesuai halaman yang dipilih pada navigasi. -->
+    <main id="page-content" aria-live="polite" aria-busy="true">
+      <p class="page-status" role="status">Memuat halaman...</p>
+    </main>
+
+    <!-- Navigasi mengubah item terpilih tanpa bergantung pada pustaka eksternal. -->
+    <nav class="bottom-nav" aria-label="Navigasi portofolio">
+      <button class="bottom-nav__item is-active" type="button" aria-pressed="true" data-nav="home">
+        <i class="ri-home-5-line" aria-hidden="true"></i>
+        <span data-nav-label="home">Home</span>
+      </button>
+      <button class="bottom-nav__item" type="button" aria-pressed="false" data-nav="education">
+        <i class="ri-graduation-cap-line" aria-hidden="true"></i>
+        <span data-nav-label="education">Education</span>
+      </button>
+      <button class="bottom-nav__item" type="button" aria-pressed="false" data-nav="skills">
+        <i class="ri-book-open-line" aria-hidden="true"></i>
+        <span data-nav-label="skills">Skills</span>
+      </button>
+      <button class="bottom-nav__item" type="button" aria-pressed="false" data-nav="project">
+        <i class="ri-briefcase-2-line" aria-hidden="true"></i>
+        <span data-nav-label="project">Project</span>
+      </button>
+      <button class="bottom-nav__item" type="button" aria-pressed="false" data-nav="contact">
+        <i class="ri-smartphone-line" aria-hidden="true"></i>
+        <span data-nav-label="contact">Contact</span>
+      </button>
+    </nav>
+
+    <!-- Footer dibuat redup seperti pada referensi desain. -->
+    <footer class="site-footer">
+      <p data-copy="copyright">Copyright Solihul Hadi All Rights Reserved</p>
+    </footer>
+  </body>
+</html>

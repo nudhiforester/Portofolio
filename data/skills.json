@@ -1,0 +1,32 @@
+[
+    {
+        "order" : 1,
+        "name_of_skill" : "PHP",
+        "image_url" : ""
+    },
+    {
+        "order" : 2,
+        "name_of_skill" : "HTML",
+        "image_url" : ""
+    },
+    {
+        "order" : 3,
+        "name_of_skill" : "CSS",
+        "image_url" : ""
+    },
+    {
+        "order" : 4,
+        "name_of_skill" : "Javascript",
+        "image_url" : ""
+    },
+    {
+        "order" : 5,
+        "name_of_skill" : "Python",
+        "image_url" : ""
+    },
+    {
+        "order" : 6,
+        "name_of_skill" : "Node Js",
+        "image_url" : ""
+    }
+]

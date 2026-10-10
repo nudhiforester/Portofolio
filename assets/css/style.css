@@ -1,0 +1,572 @@
+/* Global styles and the dark maroon-to-purple canvas. */
+:root {
+  color-scheme: dark;
+  font-family: "Geologica", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --color-text: #ead8e8;
+  --color-muted: rgba(234, 216, 232, 0.56);
+  --color-accent: #c7aebe;
+  --ease-soft: cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: #291b27;
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--color-text);
+  background:
+    radial-gradient(ellipse at 86% 42%, rgba(133, 62, 101, 0.55), transparent 56%),
+    linear-gradient(112deg, #241b24 0%, #43283b 53%, #6a3654 100%);
+}
+
+button {
+  font: inherit;
+}
+
+/* Hero composition places the oversized word behind the portrait. */
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 2vh 4vw 15vh;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero__backdrop {
+  position: absolute;
+  z-index: -1;
+  top: 1.5%;
+  left: 50%;
+  width: max-content;
+  margin: 0;
+  color: rgba(231, 209, 227, 0.72);
+  font-size: clamp(5.4rem, 17vw, 16rem);
+  font-weight: 800;
+  letter-spacing: -0.09em;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0.08em 0.1em 0.08em rgba(15, 9, 18, 0.34);
+  transform: translateX(-50%);
+}
+
+.hero__content {
+  position: relative;
+  width: min(100%, 1320px);
+  min-height: min(82vh, 900px);
+  margin: 0 auto;
+}
+
+.hero__portrait {
+  position: absolute;
+  z-index: 1;
+  bottom: -1vh;
+  left: 50%;
+  width: auto;
+  height: min(78vh, 850px);
+  max-width: 53vw;
+  object-fit: contain;
+  object-position: bottom center;
+  transform: translateX(-50%);
+  filter: drop-shadow(0.4rem 0.2rem 0.2rem rgba(14, 8, 17, 0.24));
+}
+
+.hero__greeting,
+.hero__role,
+.hero__intro,
+.hero__skill,
+.hero__name {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  font-weight: 700;
+  text-shadow: 0.08em 0.12em 0.08em rgba(18, 9, 20, 0.4);
+}
+
+.hero__greeting,
+.hero__role {
+  top: 22%;
+  font-size: clamp(1.1rem, 3.1vw, 3rem);
+  letter-spacing: -0.065em;
+}
+
+.hero__greeting {
+  left: 9%;
+}
+
+.hero__role {
+  right: 9%;
+}
+
+.hero__intro {
+  top: 29%;
+  left: 9%;
+  font-size: clamp(2.2rem, 7vw, 6rem);
+  letter-spacing: -0.08em;
+}
+
+.hero__title {
+  position: absolute;
+  z-index: 2;
+  top: 38%;
+  left: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 0;
+  font-size: clamp(4rem, 10.5vw, 10rem);
+  font-weight: 800;
+  letter-spacing: -0.09em;
+  line-height: 0.95;
+}
+
+.hero__name {
+  position: relative;
+  max-width: 50%;
+  white-space: nowrap;
+}
+
+.hero__name--first {
+  padding-left: 8%;
+}
+
+.hero__name--last {
+  padding-right: 8%;
+}
+
+.hero__skill {
+  top: 54%;
+  font-size: clamp(1rem, 3vw, 2.7rem);
+  letter-spacing: -0.06em;
+}
+
+.hero__skill--left {
+  left: 10%;
+}
+
+.hero__skill--right {
+  right: 17%;
+}
+
+/* Floating navigation uses a locally loaded icon font and glass effect. */
+.bottom-nav {
+  position: fixed;
+  z-index: 5;
+  right: 4vw;
+  bottom: 9vh;
+  left: 4vw;
+  display: grid;
+  width: min(1280px, 92vw);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin: 0 auto;
+  padding: 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  background: rgba(230, 204, 225, 0.13);
+  box-shadow: 0 1rem 3rem rgba(18, 9, 20, 0.13);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.bottom-nav__item {
+  display: flex;
+  min-width: 0;
+  min-height: 5.4rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.12rem;
+  padding: 0.5rem 0.35rem;
+  border: 0;
+  border-radius: 999px;
+  color: #fff7ff;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 260ms var(--ease-soft),
+    background-color 260ms var(--ease-soft),
+    transform 260ms var(--ease-soft);
+}
+
+.bottom-nav__item i {
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1;
+}
+
+.bottom-nav__item span {
+  font-size: clamp(0.78rem, 1.35vw, 1.1rem);
+  letter-spacing: -0.055em;
+}
+
+.bottom-nav__item:hover {
+  transform: translateY(-2px);
+}
+
+.bottom-nav__item:focus-visible {
+  outline: 2px solid #fff7ff;
+  outline-offset: 3px;
+}
+
+.bottom-nav__item.is-active {
+  color: #fff;
+  background: rgba(232, 208, 228, 0.31);
+  box-shadow: 0 0.45rem 1.4rem rgba(16, 8, 19, 0.18);
+}
+
+/* Footer remains visible beneath the floating menu. */
+.site-footer {
+  position: fixed;
+  z-index: 4;
+  right: 1rem;
+  bottom: 1.15rem;
+  left: 1rem;
+  color: var(--color-muted);
+  font-size: clamp(0.72rem, 1.3vw, 1.1rem);
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* Page loading feedback and the Education view. */
+.page-status {
+  display: grid;
+  min-height: 70vh;
+  place-items: center;
+  margin: 0;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.page-status--error {
+  color: #ffe0e8;
+}
+
+.education-page {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 8vh, 5rem);
+  padding: 5vh max(7vw, 1.25rem) 24vh;
+}
+
+.education-page__heading {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 0;
+  color: var(--color-accent);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -0.07em;
+  text-shadow: 0.08em 0.12em 0.08em rgba(18, 9, 20, 0.4);
+}
+
+.education-page__heading i {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.education-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 4vw, 3.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.education-card {
+  display: flex;
+  min-height: clamp(13rem, 43vh, 27rem);
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem) 1rem;
+  color: #382438;
+  background: #c7aebe;
+  box-shadow: 0 1.2rem 1.8rem rgba(14, 8, 17, 0.38);
+  text-align: center;
+  animation: education-card-in 650ms var(--ease-soft) both;
+}
+
+.education-card:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.education-card:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.education-card:nth-child(4) {
+  animation-delay: 270ms;
+}
+
+.education-card__level {
+  margin: 0;
+  font-size: clamp(1.05rem, 2vw, 1.55rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.education-card__school {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.55vw, 1.2rem);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@keyframes education-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered reveal directions for the initial hero copy. */
+.reveal {
+  --reveal-delay: 0ms;
+}
+
+.reveal--down {
+  --reveal-from-x: 0;
+  --reveal-from-y: -1.5rem;
+}
+
+.reveal--left {
+  --reveal-from-x: -2rem;
+  --reveal-from-y: 0;
+}
+
+.reveal--right {
+  --reveal-from-x: 2rem;
+  --reveal-from-y: 0;
+}
+
+.reveal:nth-of-type(1) {
+  --reveal-delay: 120ms;
+}
+
+.hero__role {
+  --reveal-delay: 220ms;
+}
+
+.hero__intro {
+  --reveal-delay: 310ms;
+}
+
+.hero__name--first {
+  --reveal-delay: 430ms;
+}
+
+.hero__name--last {
+  --reveal-delay: 530ms;
+}
+
+.hero__skill--left {
+  --reveal-delay: 650ms;
+}
+
+.hero__skill--right {
+  --reveal-delay: 740ms;
+}
+
+.motion-ready [data-reveal] {
+  animation: reveal-in 1050ms var(--ease-soft) var(--reveal-delay) both;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--reveal-from-x, 0), var(--reveal-from-y, 0), 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Adapt the layered hero and menu for narrow screens. */
+@media (max-width: 700px) {
+  .hero {
+    padding: 4vh 4vw 17vh;
+  }
+
+  .hero__content {
+    min-height: 78vh;
+    min-height: 78svh;
+  }
+
+  .hero__backdrop {
+    top: 5%;
+    font-size: clamp(5rem, 21vw, 9.4rem);
+  }
+
+  .hero__portrait {
+    bottom: 0;
+    height: min(70vh, 780px);
+    max-width: 76vw;
+  }
+
+  .hero__greeting,
+  .hero__role {
+    top: 22%;
+    font-size: clamp(0.9rem, 3.7vw, 1.5rem);
+  }
+
+  .hero__greeting {
+    left: 4%;
+  }
+
+  .hero__role {
+    right: 4%;
+  }
+
+  .hero__intro {
+    top: 27%;
+    left: 4%;
+    font-size: clamp(2rem, 9vw, 4rem);
+  }
+
+  .hero__title {
+    top: 37%;
+    font-size: clamp(3.2rem, 10.7vw, 5.3rem);
+  }
+
+  .hero__name--first {
+    padding-left: 2%;
+  }
+
+  .hero__name--last {
+    padding-right: 2%;
+  }
+
+  .hero__skill {
+    top: 51%;
+    font-size: clamp(0.8rem, 3.5vw, 1.45rem);
+  }
+
+  .hero__skill--left {
+    left: 4%;
+  }
+
+  .hero__skill--right {
+    right: 7%;
+  }
+
+  .bottom-nav {
+    right: 4vw;
+    bottom: 7.2vh;
+    left: 4vw;
+    width: 92vw;
+    gap: 0.1rem;
+    padding: 0.45rem;
+  }
+
+  .bottom-nav__item {
+    min-height: 4.6rem;
+    gap: 0.2rem;
+    padding-inline: 0.1rem;
+  }
+
+  .bottom-nav__item i {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+  }
+
+  .bottom-nav__item span {
+    font-size: clamp(0.62rem, 2.7vw, 0.92rem);
+  }
+
+  .site-footer {
+    bottom: 1rem;
+  }
+
+  .education-page {
+    min-height: 100svh;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 7vh 6vw 30vh;
+  }
+
+  .education-page__heading {
+    gap: 0.8rem;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .education-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .education-card {
+    min-height: 14rem;
+    gap: 1rem;
+    padding: 1.25rem 0.85rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero__greeting,
+  .hero__role {
+    top: 20%;
+    font-size: 0.82rem;
+  }
+
+  .hero__title {
+    font-size: 10vw;
+  }
+
+  .bottom-nav__item span {
+    font-size: 0.58rem;
+  }
+
+  .education-list {
+    grid-template-columns: 1fr;
+  }
+
+  .education-card {
+    min-height: 9rem;
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .education-card {
+    animation: none;
+  }
+}

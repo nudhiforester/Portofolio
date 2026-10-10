@@ -1,0 +1,18 @@
+[
+    {
+        "level" : "Sekolah Dasar (SD)",
+        "school_name" : "SDN 1 Ciporang"
+    },
+    {
+        "level" : "Sekolah Menengah Pertama (SMP)",
+        "school_name" : "SMPN 1 Kuningan"
+    },
+    {
+        "level" : "Sekolah Menengah Atas (SMA)",
+        "school_name" : "SMAN 1 Kuningan"
+    },
+    {
+        "level" : "Sarjana (S1)",
+        "school_name" : "Universitas Kuningan Fakultas Kehutanan"
+    }
+]

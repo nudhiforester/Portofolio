@@ -19,31 +19,18 @@ Buatkan kode HTML, CSS, dan JavaScript untuk landing page portofolio personal be
     - Kanan Atas: "Web Developer"
     - Kanan Tengah: Teks besar "Hadi" (posisi teks "Solihul Hadi" terbagi di kiri dan kanan foto)
     - Kanan Bawah: "Python"
-  - Bottom Navigation Bar (Sticky Bar):
-        Buat floating navigation bar melayang di bagian bawah layar (fixed/sticky bottom navigation).
-
-        Efek visual navbar menggunakan glassmorphism (latar transparan dengan backdrop-filter: blur()).
-
-        Menu nav meliputi Icon + Teks: Home, Education, Skills, Project, Contact.
-
-        Berikan state active yang jelas pada menu yang sedang dipilih.
-
-    Footer:
-
-        Tulisan pudar di paling bawah: "Copyright Solihul Hadi All Rights Reserved".
-
+  - Bottom Navigation Bar (Sticky Bar): 
+    - Buat floating navigation bar melayang di bagian bawah layar (fixed/sticky bottom navigation).
+    - Efek visual navbar menggunakan glassmorphism (latar transparan dengan backdrop-filter: blur()).
+    - Menu nav meliputi Icon + Teks: Home, Education, Skills, Project, Contact.
+    - Berikan state active yang jelas pada menu yang sedang dipilih.
+  - Footer:
+    - Tulisan pudar di paling bawah: "Copyright Solihul Hadi All Rights Reserved".
 3. Animasi & Transisi
-
     Gunakan CSS Animation / ScrollReveal / Intersection Observer agar semua elemen teks muncul secara bertahap (staggered animation).
-
     Efek Kemunculan Teks:
-
-        Teks bagian atas muncul meluncur halus dari atas ke bawah (fade-in-down).
-
-        Teks samping kiri meluncur dari kiri (fade-in-left).
-
-        Teks samping kanan meluncur dari kanan (fade-in-right).
-
-        Animasi harus terasa sangat lembut (smooth transition with cubic-bezier).
-
+    - Teks bagian atas muncul meluncur halus dari atas ke bawah (fade-in-down).
+    - Teks samping kiri meluncur dari kiri (fade-in-left).
+    - Teks samping kanan meluncur dari kanan (fade-in-right).
+    - Animasi harus terasa sangat lembut (smooth transition with cubic-bezier).
 Tolong sediakan kode HTML lengkap, CSS terpisah dengan sintaks yang rapi dan responsive (bagus di tampilan mobile maupun desktop), serta script JS untuk animasinya.
