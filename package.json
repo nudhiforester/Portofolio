@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "bootstrap": "^6.0.0-alpha.1",
+    "bootstrap-icons": "^1.13.2",
+    "jquery": "^4.0.0",
+    "mdb-ui-kit": "^9.3.0",
+    "remixicon": "^4.9.1",
+    "select2": "^4.1.0",
+    "sweetalert2": "^11.26.25",
+    "swiper": "^14.3.0"
+  }
+}
