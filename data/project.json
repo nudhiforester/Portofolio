@@ -1,0 +1,27 @@
+[
+    {
+        "project_name" : "SIMRS-Elsyifa",
+        "description" : "Mengembangkan aplikasi Sistem Informasi Manajemen Rumah Sakit (SIMRS) pada rumah sakit umum El-Syifa Kuningan",
+        "image" : "assets/img/project/simrs.png"
+    },
+    {
+        "project_name" : "Pharmix V1.0.0",
+        "description" : "Aplikasi Apotek dan praktek mandiri, terintegrasi SATUSEHAT dan pengelolaan keuangan yang lengkap",
+        "image" : "assets/img/project/pharmix.png"
+    },
+    {
+        "project_name" : "Web Apotek",
+        "description" : "Web Landing Page Apotek. Menggunakan html5 dan pustaka bootstrap5.",
+        "image" : "assets/img/project/web-apotek.png"
+    },
+    {
+        "project_name" : "Web Sekolah",
+        "description" : "Web Landing Page Sekolah. Menggunakan html5 dan pustaka bootstrap5. Menampilkan galeri interaktif, responsif dan efisien",
+        "image" : "assets/img/project/web-sekolah.png"
+    },
+    {
+        "project_name" : "Web Rumah Sakit",
+        "description" : "Web Landing Page Rumah Sakit. Menggunakan html5 dan pustaka bootstrap5. Menampilkan informasi profil rumah sakit",
+        "image" : "assets/img/project/web-rumah-sakit.png"
+    }
+]

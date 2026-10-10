@@ -1,0 +1,30 @@
+<!-- Project carousel and modal are populated from data/project.json. -->
+<section class="project-page" aria-labelledby="project-title">
+  <h1 class="project-page__heading reveal reveal--down" id="project-title" data-reveal>
+    <i class="ri-briefcase-2-fill" aria-hidden="true"></i>
+    <span>Project</span>
+  </h1>
+
+  <div class="project-carousel">
+    <div class="swiper project-swiper" data-projects-carousel>
+      <div class="swiper-wrapper" data-projects-track aria-label="Daftar project"></div>
+    </div>
+    <div class="swiper-pagination project-pagination" aria-label="Navigasi project"></div>
+  </div>
+
+  <dialog class="project-dialog" data-project-dialog aria-labelledby="project-dialog-title">
+    <div class="project-dialog__content">
+      <button
+        class="project-dialog__close"
+        type="button"
+        aria-label="Tutup deskripsi project"
+        data-project-dialog-close
+      >
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+      <img class="project-dialog__image" src="" alt="" data-project-dialog-image>
+      <h2 class="project-dialog__title" id="project-dialog-title" data-project-dialog-title></h2>
+      <p class="project-dialog__description" data-project-dialog-description></p>
+    </div>
+  </dialog>
+</section>

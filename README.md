@@ -11,8 +11,11 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - Teks hero dan label navigasi yang dapat disesuaikan lewat `data/portfolio.json`.
 - Font Geologica dan ikon Remix Icon dimuat dari aset lokal.
 - Favicon untuk browser, perangkat Apple, dan aplikasi Android menggunakan aset lokal.
-- Navigasi Home dan Education memuat halaman secara dinamis tanpa memuat ulang dokumen.
+- Navigasi Home, Education, Skills, Project, dan Contact memuat halaman secara dinamis tanpa memuat ulang dokumen.
 - Riwayat pendidikan ditampilkan dari `data/education.json`.
+- Halaman Skills menampilkan carousel Swiper; pada mobile tiap slide memuat hingga empat keahlian dalam grid dua kolom dan dua baris, dan dapat digeser dengan usapan.
+- Halaman Project menampilkan tiga kartu per halaman di desktop dan dua di mobile; memilih kartu membuka dialog deskripsi proyek. Konten disiapkan sebelum ditampilkan agar transisi carousel tidak berkedip, dengan animasi kartu bertahap.
+- Halaman Contact menampilkan email, telepon, tautan media sosial, dan viewer peta Google Maps responsif dari `data/contact.json`, dengan animasi transisi bertahap.
 - Metadata dasar untuk SEO.
 
 ## Requirements
@@ -30,6 +33,9 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 3. Buka proyek melalui server lokal, misalnya `http://localhost/Portofolio/`, bukan dengan membuka `index.html` langsung. JavaScript mengambil konten dari `data/portfolio.json`.
 4. Ubah teks pada `data/portfolio.json` untuk menyesuaikan konten hero dan label navigasi.
 5. Ubah data pendidikan pada `data/education.json` untuk memperbarui riwayat pendidikan.
+6. Ubah data keahlian pada `data/skills.json` dan sesuaikan path gambar yang tersedia pada `assets/img/skills/`.
+7. Ubah nama, deskripsi, dan path gambar proyek pada `data/project.json`.
+8. Ubah informasi kontak serta URL Google Maps dan URL embed peta pada `data/contact.json`.
 
 ## Struktur Berkas
 
@@ -38,9 +44,12 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - `assets/js/main.js` — pemuatan halaman dan konten JSON serta state navigasi.
 - `assets/fonts/fonts.css` — deklarasi font Geologica lokal.
 - `data/portfolio.json` — konten hero dan label menu yang dapat dikustomisasi.
-- `page/home.html` dan `page/education.html` — fragmen halaman yang dimuat secara dinamis.
+- `page/home.html`, `page/education.html`, `page/skills.html`, `page/project.html`, dan `page/contact.html` — fragmen halaman yang dimuat secara dinamis.
 - `data/education.json` — daftar tingkat dan institusi pendidikan.
+- `data/skills.json` — nama, urutan, dan path gambar keahlian; carousel memakai Swiper lokal dari `node_modules`.
+- `data/project.json` — nama, deskripsi, dan path gambar proyek.
+- `data/contact.json` — email, telepon, media sosial, tautan Google Maps, dan URL embed peta.
 
 ## Dependensi
 
-Dependensi yang tersedia di proyek dicatat dalam `package.json`: Bootstrap, Bootstrap Icons, jQuery, MDB UI Kit, Remix Icon, Select2, SweetAlert2, dan Swiper. Halaman landing ini tidak memuat dependensi dari CDN; hanya Remix Icon yang digunakan oleh antarmuka.
+Dependensi yang tersedia di proyek dicatat dalam `package.json`: Bootstrap, Bootstrap Icons, jQuery, MDB UI Kit, Remix Icon, Select2, SweetAlert2, dan Swiper. Antarmuka menggunakan Remix Icon dan Swiper dari `node_modules`; tidak ada dependensi yang dimuat dari CDN.

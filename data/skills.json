@@ -2,31 +2,31 @@
     {
         "order" : 1,
         "name_of_skill" : "PHP",
-        "image_url" : ""
+        "image_url" : "assets/img/skills/php.jpg"
     },
     {
         "order" : 2,
         "name_of_skill" : "HTML",
-        "image_url" : ""
+        "image_url" : "assets/img/skills/html.jpg"
     },
     {
         "order" : 3,
         "name_of_skill" : "CSS",
-        "image_url" : ""
+        "image_url" : "assets/img/skills/css.jpg"
     },
     {
         "order" : 4,
         "name_of_skill" : "Javascript",
-        "image_url" : ""
+        "image_url" : "assets/img/skills/javascript.png"
     },
     {
         "order" : 5,
         "name_of_skill" : "Python",
-        "image_url" : ""
+        "image_url" : "assets/img/skills/python.jpg"
     },
     {
         "order" : 6,
         "name_of_skill" : "Node Js",
-        "image_url" : ""
+        "image_url" : "assets/img/skills/node_js.jpg"
     }
 ]
