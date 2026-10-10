@@ -9,33 +9,35 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - Navigasi mengambang dengan efek glassmorphism dan state aktif.
 - Animasi teks bertahap dengan preferensi reduced motion.
 - Teks hero dan label navigasi yang dapat disesuaikan lewat `data/portfolio.json`.
-- Font Geologica dan ikon Remix Icon dimuat dari aset lokal.
+- Font Geologica, Remix Icon, dan Swiper dimuat dari aset lokal yang ikut tersimpan di repositori, sehingga tetap tersedia pada GitHub Pages.
 - Favicon untuk browser, perangkat Apple, dan aplikasi Android menggunakan aset lokal.
 - Navigasi Home, Education, Skills, Project, dan Contact memuat halaman secara dinamis tanpa memuat ulang dokumen.
 - Riwayat pendidikan ditampilkan dari `data/education.json`.
 - Halaman Skills menampilkan carousel Swiper; pada mobile tiap slide memuat hingga empat keahlian dalam grid dua kolom dan dua baris, dan dapat digeser dengan usapan.
 - Halaman Project menampilkan tiga kartu per halaman di desktop dan dua di mobile; memilih kartu membuka dialog deskripsi proyek. Konten disiapkan sebelum ditampilkan agar transisi carousel tidak berkedip, dengan animasi kartu bertahap.
 - Halaman Contact menampilkan email, telepon, tautan media sosial, dan viewer peta Google Maps responsif dari `data/contact.json`, dengan animasi transisi bertahap.
+- CI menjalankan `npm test` untuk memeriksa struktur data JSON setiap halaman, direktori aset gambar, serta keberadaan file gambar yang dirujuk oleh data.
 - Metadata dasar untuk SEO.
 
 ## Requirements
 
 - PHP/WAMP atau server HTTP lokal lain untuk melayani halaman dan berkas JSON.
 - Browser modern dengan dukungan CSS Grid, `backdrop-filter`, dan JavaScript.
-- Aset lokal yang tersedia: `assets/img/user/person.png`, font Geologica, dan Remix Icon di `node_modules`.
+- Aset lokal yang tersedia: `assets/img/user/person.png`, font Geologica, dan Remix Icon di `assets/vendor/remixicon`.
 - Favicon lokal dan manifest tersedia di `assets/img/pavicon`.
-- Dependensi NPM yang tercantum pada `package.json` (ikon Remix Icon digunakan langsung dari `node_modules`).
+- Berkas vendor Remix Icon dan Swiper tersedia di `assets/vendor`; `node_modules` hanya diperlukan untuk pengembangan lokal.
 
 ## Persiapan dan Instalasi
 
-1. Pastikan PHP/WAMP tersedia atau jalankan server HTTP lokal dari direktori proyek.
-2. Jika dependensi belum terpasang, jalankan `npm install` pada direktori proyek.
-3. Buka proyek melalui server lokal, misalnya `http://localhost/Portofolio/`, bukan dengan membuka `index.html` langsung. JavaScript mengambil konten dari `data/portfolio.json`.
-4. Ubah teks pada `data/portfolio.json` untuk menyesuaikan konten hero dan label navigasi.
-5. Ubah data pendidikan pada `data/education.json` untuk memperbarui riwayat pendidikan.
-6. Ubah data keahlian pada `data/skills.json` dan sesuaikan path gambar yang tersedia pada `assets/img/skills/`.
-7. Ubah nama, deskripsi, dan path gambar proyek pada `data/project.json`.
-8. Ubah informasi kontak serta URL Google Maps dan URL embed peta pada `data/contact.json`.
+1. Jalankan server HTTP lokal dari direktori proyek, misalnya PHP/WAMP pada `http://localhost/Portofolio/`; halaman mengambil konten dengan `fetch` sehingga tidak dapat dibuka langsung sebagai `file://`.
+2. Jika dependensi pengembangan belum terpasang, jalankan `npm install` pada direktori proyek.
+3. Jalankan `npm test` untuk memeriksa struktur data dan keberadaan folder serta file gambar.
+4. Untuk GitHub Pages, atur sumber publikasi ke branch yang menyimpan `index.html` pada root (misalnya `main` / `/ (root)`). Aset memakai path relatif dari root repositori dan dependensi antarmuka sudah tersedia di `assets/vendor`.
+5. Ubah teks pada `data/portfolio.json` untuk menyesuaikan konten hero dan label navigasi.
+6. Ubah data pendidikan pada `data/education.json` untuk memperbarui riwayat pendidikan.
+7. Ubah data keahlian pada `data/skills.json` dan sesuaikan path gambar yang tersedia pada `assets/img/skills/`.
+8. Ubah nama, deskripsi, dan path gambar proyek pada `data/project.json`.
+9. Ubah informasi kontak serta URL Google Maps dan URL embed peta pada `data/contact.json`.
 
 ## Struktur Berkas
 
@@ -43,13 +45,16 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - `assets/css/style.css` — tampilan, responsivitas, glassmorphism, dan animasi.
 - `assets/js/main.js` — pemuatan halaman dan konten JSON serta state navigasi.
 - `assets/fonts/fonts.css` — deklarasi font Geologica lokal.
+- `assets/vendor/remixicon/` dan `assets/vendor/swiper/` — stylesheet, font ikon, dan modul carousel lokal untuk deployment statis.
 - `data/portfolio.json` — konten hero dan label menu yang dapat dikustomisasi.
 - `page/home.html`, `page/education.html`, `page/skills.html`, `page/project.html`, dan `page/contact.html` — fragmen halaman yang dimuat secara dinamis.
 - `data/education.json` — daftar tingkat dan institusi pendidikan.
-- `data/skills.json` — nama, urutan, dan path gambar keahlian; carousel memakai Swiper lokal dari `node_modules`.
+- `data/skills.json` — nama, urutan, dan path gambar keahlian; carousel memakai Swiper lokal dari `assets/vendor/swiper`.
 - `data/project.json` — nama, deskripsi, dan path gambar proyek.
 - `data/contact.json` — email, telepon, media sosial, tautan Google Maps, dan URL embed peta.
+- `tests/data.test.js` — pengujian skema data halaman dan keberadaan direktori/file gambar.
+- `.github/workflows/ci.yml` — GitHub Actions untuk menjalankan pengujian pada push dan pull request.
 
 ## Dependensi
 
-Dependensi yang tersedia di proyek dicatat dalam `package.json`: Bootstrap, Bootstrap Icons, jQuery, MDB UI Kit, Remix Icon, Select2, SweetAlert2, dan Swiper. Antarmuka menggunakan Remix Icon dan Swiper dari `node_modules`; tidak ada dependensi yang dimuat dari CDN.
+Dependensi pengembangan yang tercatat di `package.json`: Bootstrap, Bootstrap Icons, jQuery, MDB UI Kit, Remix Icon, Select2, SweetAlert2, dan Swiper. Pengujian menggunakan test runner bawaan Node.js tanpa dependensi tambahan. Antarmuka menggunakan salinan lokal Remix Icon dan Swiper di `assets/vendor`; tidak ada dependensi yang dimuat dari CDN atau diminta dari `node_modules` ketika situs berjalan.

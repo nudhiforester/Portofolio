@@ -8,5 +8,8 @@
     "select2": "^4.1.0",
     "sweetalert2": "^11.26.25",
     "swiper": "^14.3.0"
+  },
+  "scripts": {
+    "test": "node --test"
   }
 }

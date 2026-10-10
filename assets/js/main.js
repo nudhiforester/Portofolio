@@ -232,7 +232,7 @@ async function loadSkillsData(signal) {
 
 async function initializeSwiper(carousel, signal, options, SwiperConstructor) {
   const Swiper = SwiperConstructor ??
-    (await import("../../node_modules/swiper/swiper-bundle.min.mjs")).default;
+    (await import("../vendor/swiper/swiper-bundle.min.mjs")).default;
   if (signal.aborted) {
     return;
   }
@@ -497,7 +497,7 @@ async function loadPage(pageKey) {
       stagingContainer.append(fragment);
       applyPortfolioContent(stagingContainer);
       await loadProjectData(controller.signal, stagingContainer, false);
-      const { default: Swiper } = await import("../../node_modules/swiper/swiper-bundle.min.mjs");
+      const { default: Swiper } = await import("../vendor/swiper/swiper-bundle.min.mjs");
       if (controller.signal.aborted || requestId !== pageRequestId) {
         return;
       }
