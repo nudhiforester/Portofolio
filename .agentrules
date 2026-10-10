@@ -1,0 +1,48 @@
+# Aturan Dasar dan Prinsip Dasar
+## Aturan Utama
+1. Jangan pernah generate atau membuat gambar, vidio atau media lainnya.
+2. Jangan pernah menggunakan pustaka / dependensi dengan CDN tanpa ijin.
+3. jangan pernah menambahkan fitur apapun selain yang diminta.
+4. Selalu mempertimbangkan optimalisasi pencarian (SEO)
+
+## Standar Changelog & Requirements
+1. Setiap kali ada penambahan, perubahan, atau penghapusan fitur pada kode HTML/CSS, AI **wajib** memperbarui file `README.md`.
+2. File `README.md` harus selalu memuat daftar fitur aktif (*Active Features*) dan daftar kebutuhan (*Requirements*) yang diperbarui secara real-time.
+3. File `README.md` memuat pedoman instalasi aplikasi dan langkah-langkah yang perlu dilakukan untuk mempersiapkan aplikasi.
+4. File `README.md` memuat deskripsi aplikasi yang mudah dipahami, terdiri dari fungsi dan kegunaan aplikasi serta gambaran umum urgensinya.
+5. File `README.md` memuat daftar dependensi dan pustaka yang digunakan (walapun sudah ada pada package.json)
+
+## Batasan Teknis
+1. Pustaka dan depedensi NPM selalu dimuat pada folder node_modules dan tidak dipanggil menggunakan CDN.
+2. Pustaka dan depedensi composer dimuat pada folder vendors
+3. Gunakan file tunggal `index.html` dengan CSS internal kecuali diminta secara khusus (misalnya halaman login.html, error.html dll).
+4. Terapkan desain yang bersih dan responsif menggunakan Flexbox atau CSS Grid.
+
+## Dokumen Wajib Yang Harus Selalu Dibaca Setiap Kali Akan Melakukan Eksekusi Perintah
+1. .agentrules
+2. README.md
+3. .gitignore
+4. .package-lock.json
+5. package.json
+6. package-lock.json
+
+## Prinsip Gaya Visual Yang Harus Dijaga
+1. Responsif (Mobile First)
+2. Gunakan Icon Yang Relevan Dengan Fungsi Fitur Atau Aksi
+3. Setiap transisi harus menggunakan efek yang lembut dan teratur.
+4. Utamakan efisiensi sumber daya dan akses cepat serta ringan.
+
+## Aturan Penulisan Kode
+1. Selalu menyertakan komentar pada setiap blok agar mudah dipahami fungsi dan tujuannya
+2. **Semantic & Clean:** Gunakan tag HTML5 semantik (`<header>`, `<main>`, `<section>`, dll.) dan pastikan indentasi konsisten (2 spasi).
+3. **CSS Maintainability:** Tulis CSS yang bersih, terorganisir per bagian (Global, Layout, Component), dan gunakan penamaan kelas yang deskriptif. Hindari *inline style* kecuali sangat mendesak.
+4. **Self-Documenting Code:** Berikan komentar singkat (`/* Komentar Bagian */`) pada bagian-bagian kode CSS/HTML yang penting agar mudah dibaca kembali di masa depan.
+
+## Informasi dan Pengetahuan Bermanfaat Untuk Agent 
+1. Style umum yang mempengaruhi semua halaman ditulis di assets\css\style.css
+2. Javascript yang mempengaruhi semua halaman ditulis di assets\js\main.js
+3. Koleksi Font disimpan di assets\fonts
+4. CSS Font ditulis di assets\fonts\fonts.css
+5. Pavicon dan file manifestasi nya disimpan di assets\img\pavicon
+6. File foto yang berkaitan dengan pengguna disimpan di assets\img\user
+7. Data disimpan dalam bentuk json di folder data

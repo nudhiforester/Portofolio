@@ -1,0 +1,53 @@
+{
+  "seo_metadata": {
+    "title": "Solihul Hadi | Web Developer & Portfolio",
+    "description": "Portofolio profesional Solihul Hadi, seorang Web Developer spesialis PHP, JavaScript, dan Python. Lihat keahlian, riwayat pendidikan, dan proyek terbaik.",
+    "keywords": [
+      "Solihul Hadi",
+      "Web Developer",
+      "Portofolio Web",
+      "PHP Developer",
+      "JavaScript Developer",
+      "Python Developer",
+      "Fullstack Developer Indonesia"
+    ],
+    "author": "Solihul Hadi",
+    "robots": "index, follow",
+    "canonical_url": "https://domainkamu.com/",
+    "language": "id",
+    "viewport": "width=device-width, initial-scale=1.0"
+  },
+  "open_graph": {
+    "og:type": "website",
+    "og:title": "Solihul Hadi - Web Developer Portfolio",
+    "og:description": "Portofolio interaktif Solihul Hadi. Spesialis dalam pembuatan aplikasi web modern menggunakan PHP, JavaScript, dan Python.",
+    "og:url": "https://domainkamu.com/",
+    "og:image": "https://domainkamu.com/assets/img/user/person.png",
+    "og:site_name": "Portofolio Solihul Hadi",
+    "og:locale": "id_ID"
+  },
+  "twitter_card": {
+    "twitter:card": "summary_large_image",
+    "twitter:title": "Solihul Hadi - Web Developer Portfolio",
+    "twitter:description": "Portofolio interaktif Solihul Hadi. Spesialis PHP, JavaScript, dan Python.",
+    "twitter:image": "https://domainkamu.com/assets/img/user/person.png"
+  },
+  "schema_json_ld": {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Solihul Hadi",
+    "jobTitle": "Web Developer",
+    "url": "https://domainkamu.com/",
+    "image": "https://domainkamu.com/assets/img/user/person.png",
+    "knowsAbout": [
+      "PHP",
+      "JavaScript",
+      "Python",
+      "Web Development"
+    ],
+    "sameAs": [
+      "https://github.com/usernamekamu",
+      "https://linkedin.com/in/usernamekamu"
+    ]
+  }
+}
