@@ -20,10 +20,22 @@
     <link rel="stylesheet" href="assets/fonts/fonts.css">
     <link rel="stylesheet" href="assets/vendor/remixicon/remixicon.css">
     <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=3">
     <script src="assets/js/main.js" defer></script>
   </head>
   <body>
+    <!-- Preloader memberi umpan balik visual selama konten awal dimuat. -->
+    <div class="preloader" id="preloader" role="status" aria-label="Memuat portofolio">
+      <div class="preloader__content">
+        <div class="preloader__emblem" aria-hidden="true">
+          <img class="preloader__logo" src="assets/img/pavicon/android-chrome-192x192.png" alt="">
+        </div>
+        <div class="preloader__progress" role="progressbar" aria-label="Progres pemuatan" aria-valuemin="0" aria-valuemax="100">
+          <span class="preloader__progress-fill"></span>
+        </div>
+      </div>
+    </div>
+
     <!-- Isi main dimuat sesuai halaman yang dipilih pada navigasi. -->
     <main id="page-content" aria-live="polite" aria-busy="true">
       <p class="page-status" role="status">Memuat halaman...</p>
@@ -55,7 +67,7 @@
 
     <!-- Footer dibuat redup seperti pada referensi desain. -->
     <footer class="site-footer">
-      <p data-copy="copyright">Copyright Solihul Hadi All Rights Reserved</p>
+      <p data-copy="copyright">Copyright <a class="site-footer__link" href="https://github.com/solihulhadi141213" target="_blank" rel="noopener noreferrer" aria-label="Solihul Hadi di GitHub">Solihul Hadi</a> All Rights Reserved</p>
     </footer>
   </body>
 </html>

@@ -34,6 +34,91 @@ body {
     linear-gradient(112deg, #241b24 0%, #43283b 53%, #6a3654 100%);
 }
 
+/* Dark loading overlay with a centered favicon, spinner, and progress indicator. */
+.preloader {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #080708;
+  opacity: 1;
+  transition: opacity 420ms var(--ease-soft), visibility 420ms var(--ease-soft);
+  visibility: visible;
+}
+
+.preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader__content {
+  display: flex;
+  width: min(18rem, 72vw);
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.preloader__emblem {
+  position: relative;
+  display: grid;
+  width: 8rem;
+  aspect-ratio: 1;
+  place-items: center;
+}
+
+.preloader__emblem::before {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(234, 216, 232, 0.16);
+  border-top-color: #ead8e8;
+  border-right-color: rgba(234, 216, 232, 0.65);
+  border-radius: 50%;
+  content: "";
+  animation: preloader-spin 1s linear infinite;
+}
+
+.preloader__logo {
+  display: block;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.preloader__progress {
+  width: 100%;
+  height: 0.35rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(234, 216, 232, 0.18);
+}
+
+.preloader__progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #ead8e8;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: preloader-progress 2s var(--ease-soft) forwards;
+}
+
+@keyframes preloader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes preloader-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 button {
   font: inherit;
 }
@@ -164,6 +249,19 @@ button {
   right: 17%;
 }
 
+/* Gently lift one hero text item when the Home page has been idle. */
+.hero__greeting,
+.hero__role,
+.hero__intro,
+.hero__name,
+.hero__skill {
+  transition: translate 320ms var(--ease-soft);
+}
+
+#page-content .home-idle-nudge {
+  translate: 0 -0.35rem;
+}
+
 /* Floating navigation uses a locally loaded icon font and glass effect. */
 .bottom-nav {
   position: fixed;
@@ -247,6 +345,25 @@ button {
   margin: 0;
 }
 
+/* Highlight the linked profile name in the copyright footer. */
+.site-footer__link {
+  color: #ff9638;
+  text-decoration: none;
+  transition: color 220ms var(--ease-soft), text-decoration-color 220ms var(--ease-soft);
+}
+
+.site-footer__link:hover {
+  color: #ffb66e;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.site-footer__link:focus-visible {
+  border-radius: 0.15em;
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
 /* Page loading feedback and the Education view. */
 .page-status {
   display: grid;
@@ -289,25 +406,51 @@ button {
 
 .education-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(1rem, 4vw, 3.5rem);
+  width: min(100%, 900px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
   margin: 0;
+  align-self: center;
   padding: 0;
   list-style: none;
 }
 
 .education-card {
+  position: relative;
   display: flex;
-  min-height: clamp(13rem, 43vh, 27rem);
+  min-height: clamp(8rem, 19vh, 15rem);
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
-  padding: clamp(1.25rem, 3vw, 2.5rem) 1rem;
+  gap: 0.8rem;
+  padding: clamp(0.8rem, 2vw, 1.5rem);
   color: #382438;
-  background: #c7aebe;
-  box-shadow: 0 1.2rem 1.8rem rgba(14, 8, 17, 0.38);
+  background: #ead8e8;
+  box-shadow: 0 1.1rem 1.7rem rgba(14, 8, 17, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   text-align: center;
   animation: education-card-in 650ms var(--ease-soft) both;
+  transition:
+    scale 280ms var(--ease-soft),
+    translate 280ms var(--ease-soft),
+    box-shadow 280ms var(--ease-soft);
+}
+
+.education-card:nth-child(odd) {
+  rotate: -0.7deg;
+}
+
+.education-card:nth-child(even) {
+  rotate: 0.7deg;
+}
+
+/* Lift the note above its neighbors when a desktop pointer hovers it. */
+@media (hover: hover) and (pointer: fine) {
+  .education-card:hover {
+    z-index: 1;
+    scale: 1.045;
+    translate: 0 -0.55rem;
+    box-shadow: 0 1.8rem 2.4rem rgba(14, 8, 17, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
 }
 
 .education-card:nth-child(2) {
@@ -324,16 +467,18 @@ button {
 
 .education-card__level {
   margin: 0;
-  font-size: clamp(1.05rem, 2vw, 1.55rem);
-  font-weight: 700;
-  line-height: 1.35;
+  font-family: "Shadows Into Light", cursive;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
 }
 
 .education-card__school {
   margin: 0;
-  font-size: clamp(0.92rem, 1.55vw, 1.2rem);
-  font-weight: 500;
-  line-height: 1.5;
+  font-family: "Shadows Into Light", cursive;
+  font-size: clamp(1.15rem, 2vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 @keyframes education-card-in {
@@ -400,11 +545,9 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  min-height: clamp(16rem, 42vh, 25rem);
-  padding: clamp(1.1rem, 2.4vw, 2rem) 1rem;
-  color: #382438;
-  background: #c7aebe;
-  box-shadow: 0 1.2rem 1.8rem rgba(14, 8, 17, 0.38);
+  min-height: clamp(14rem, 36vh, 22rem);
+  padding: clamp(0.8rem, 2vw, 1.5rem) 0.5rem;
+  color: #fff3fa;
   text-align: center;
   animation: education-card-in 650ms var(--ease-soft) both;
 }
@@ -430,20 +573,28 @@ button {
 
 .skill-card__image-frame {
   display: grid;
-  width: min(100%, 13rem);
+  width: min(100%, 12rem);
   aspect-ratio: 1;
   overflow: hidden;
   place-items: center;
-  border-radius: 1rem;
-  background: #050407;
-  box-shadow: 0 0.5rem 0.65rem rgba(14, 8, 17, 0.22);
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 2rem;
+  background: linear-gradient(145deg, #f5dce9, #c9a5bc);
+  box-shadow:
+    0.75rem 0.75rem 1.35rem rgba(17, 8, 20, 0.32),
+    -0.55rem -0.55rem 1.1rem rgba(255, 231, 244, 0.2),
+    inset 0.15rem 0.15rem 0.3rem rgba(255, 255, 255, 0.65),
+    inset -0.15rem -0.15rem 0.35rem rgba(93, 51, 79, 0.2);
 }
 
 .skill-card__image {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 84%;
+  height: 84%;
   object-fit: contain;
+  border-radius: 1.2rem;
+  filter: drop-shadow(0.25rem 0.35rem 0.25rem rgba(32, 15, 33, 0.28));
 }
 
 .skills-pagination {
@@ -487,7 +638,7 @@ button {
   min-height: 100vh;
   min-height: 100svh;
   flex-direction: column;
-  gap: clamp(3rem, 9vh, 6rem);
+  gap: clamp(1.25rem, 4vh, 2.5rem);
   padding: 7vh max(7vw, 1.25rem) 24vh;
 }
 
@@ -512,37 +663,44 @@ button {
   flex: 1;
   flex-direction: column;
   justify-content: center;
-  gap: clamp(2.5rem, 8vh, 5rem);
+  gap: 1.25rem;
   min-width: 0;
+  overflow: visible;
 }
 
 .project-swiper {
-  width: 100%;
-  overflow: hidden;
+  width: min(100%, 88rem);
+  overflow: visible;
+}
+
+.project-swiper .swiper-wrapper {
+  align-items: center;
+}
+
+.project-swiper .swiper-slide {
+  width: clamp(18rem, 34vw, 32rem);
+  height: auto;
 }
 
 .project-card {
-  display: flex;
+  position: relative;
+  display: block;
   width: 100%;
-  min-height: clamp(13rem, 27vh, 17rem);
-  flex-direction: column;
-  gap: 0.9rem;
-  padding: clamp(0.65rem, 1vw, 0.9rem);
+  min-height: 0;
+  padding: 0;
   border: 0;
-  border-radius: 1rem;
-  color: #171219;
-  background: #c7aebe;
-  box-shadow: 0 0.55rem 0.9rem rgba(14, 8, 17, 0.22);
+  border-radius: 0.9rem;
+  color: #fff;
+  background: transparent;
   cursor: pointer;
-  text-align: left;
   transition:
     transform 360ms var(--ease-soft),
-    box-shadow 360ms var(--ease-soft);
+    filter 360ms var(--ease-soft);
 }
 
 .project-card:hover {
-  transform: translateY(-0.35rem);
-  box-shadow: 0 1rem 1.5rem rgba(14, 8, 17, 0.32);
+  transform: translateY(-0.35rem) scale(1.025);
+  filter: brightness(1.06);
 }
 
 .project-card:focus-visible {
@@ -569,10 +727,17 @@ button {
 .project-card__image-frame {
   display: block;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 1.7 / 1;
   overflow: hidden;
-  border-radius: 0.7rem;
+  border: 0;
+  border-radius: 0.9rem;
   background: rgba(32, 18, 31, 0.12);
+  box-shadow: 0 1.25rem 2.2rem rgba(14, 8, 17, 0.3), 0 0.3rem 0.8rem rgba(14, 8, 17, 0.2);
+  transition: box-shadow 360ms var(--ease-soft);
+}
+
+.project-card:hover .project-card__image-frame {
+  box-shadow: 0 1.5rem 2.5rem rgba(14, 8, 17, 0.36), 0 0.45rem 1rem rgba(14, 8, 17, 0.22);
 }
 
 .project-card__image {
@@ -589,12 +754,7 @@ button {
 }
 
 .project-card__title {
-  display: block;
-  padding: 0.2rem 0.5rem 0.4rem;
-  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
-  font-size: clamp(0.95rem, 1.55vw, 1.4rem);
-  font-weight: 700;
-  line-height: 1.3;
+  display: none;
 }
 
 .project-pagination {
@@ -604,13 +764,13 @@ button {
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
-  padding-top: 0.25rem;
+  gap: 0.85rem;
+  padding-top: 0.5rem;
 }
 
 .project-pagination .swiper-pagination-bullet {
-  width: 0.9rem;
-  height: 0.9rem;
+  width: 1.65rem;
+  height: 1.65rem;
   margin: 0;
   background: rgba(234, 216, 232, 0.45);
   opacity: 1;
@@ -640,7 +800,7 @@ button {
   max-height: min(86vh, 48rem);
   padding: 0;
   overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 0;
   border-radius: 1.2rem;
   color: var(--color-text);
   background: linear-gradient(135deg, #382437, #69405b);
@@ -1017,6 +1177,29 @@ button {
     font-size: clamp(0.62rem, 2.7vw, 0.92rem);
   }
 
+  .bottom-nav__item.is-active {
+    position: relative;
+    z-index: 1;
+    width: clamp(3.3rem, 12vw, 4rem);
+    min-height: clamp(3.3rem, 12vw, 4rem);
+    justify-self: center;
+    padding: 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 1.35rem;
+    color: #382438;
+    background: linear-gradient(145deg, #fff2fc, #d9bfd2);
+    box-shadow: 0 0.65rem 1.1rem rgba(15, 7, 17, 0.38), inset 0 1px 0 #fff;
+    transform: translateY(-0.85rem);
+  }
+
+  .bottom-nav__item.is-active i {
+    font-size: 1.45rem;
+  }
+
+  .bottom-nav__item.is-active span {
+    font-size: clamp(0.55rem, 2.1vw, 0.7rem);
+  }
+
   .site-footer {
     bottom: 1rem;
   }
@@ -1035,13 +1218,22 @@ button {
 
   .education-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
   .education-card {
-    min-height: 14rem;
-    gap: 1rem;
-    padding: 1.25rem 0.85rem;
+    min-height: 10rem;
+    gap: 0.65rem;
+    padding: 1rem 0.55rem;
+  }
+
+  .education-card__level {
+    font-size: clamp(0.92rem, 4vw, 1.2rem);
+  }
+
+  .education-card__school {
+    font-size: clamp(0.82rem, 3.5vw, 1.05rem);
   }
 
   .skills-page {
@@ -1080,11 +1272,12 @@ button {
 
   .skill-card__image-frame {
     width: min(100%, 8.5rem);
-    border-radius: 0.8rem;
+    padding: 0.7rem;
+    border-radius: 1.45rem;
   }
 
   .project-page {
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 7vh 6vw 30vh;
   }
 
@@ -1094,24 +1287,22 @@ button {
   }
 
   .project-carousel {
-    gap: 2.5rem;
+    gap: 1.5rem;
+  }
+
+  .project-swiper .swiper-slide {
+    width: clamp(15rem, 78vw, 25rem);
   }
 
   .project-card {
-    min-height: 13rem;
-    gap: 0.75rem;
-    padding: 0.7rem;
-    border-radius: 0.85rem;
+    min-height: 0;
+    padding: 0;
+    border-radius: 0.8rem;
   }
 
   .project-card__image-frame {
-    aspect-ratio: 1.35 / 1;
-    border-radius: 0.55rem;
-  }
-
-  .project-card__title {
-    padding: 0.15rem 0.3rem 0.25rem;
-    font-size: clamp(0.8rem, 3.3vw, 1rem);
+    aspect-ratio: 1.55 / 1;
+    border-radius: 0.8rem;
   }
 
   .project-dialog {
@@ -1166,12 +1357,17 @@ button {
     font-size: 0.58rem;
   }
 
-  .education-list {
-    grid-template-columns: 1fr;
+  .education-card {
+    min-height: 8.5rem;
+    padding: 0.75rem 0.35rem;
   }
 
-  .education-card {
-    min-height: 9rem;
+  .education-card__level {
+    font-size: 0.86rem;
+  }
+
+  .education-card__school {
+    font-size: 0.76rem;
   }
 
   .skill-card {
@@ -1179,12 +1375,7 @@ button {
   }
 
   .project-card {
-    min-height: 11rem;
-    padding: 0.55rem;
-  }
-
-  .project-card__title {
-    font-size: 0.75rem;
+    min-height: 0;
   }
 }
 
@@ -1203,12 +1394,28 @@ button {
     animation: none;
   }
 
+  .education-card:hover {
+    scale: 1;
+    translate: 0 0;
+    box-shadow: 0 1.1rem 1.7rem rgba(14, 8, 17, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .preloader__emblem::before {
+    animation: none !important;
+  }
+
+  .preloader__progress-fill {
+    animation: none !important;
+    transform: scaleX(1);
+  }
+
   .skill-card {
     animation: none;
   }
 
   .project-card,
-  .project-card__image {
+  .project-card__image,
+  .project-card__image-frame {
     transition: none;
   }
 }

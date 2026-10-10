@@ -1,6 +1,10 @@
 /* Loads the requested page fragment and populates it with local JSON data. */
 const navigationItems = document.querySelectorAll("[data-nav]");
 const pageContent = document.querySelector("#page-content");
+const preloader = document.querySelector("#preloader");
+const preloaderProgress = document.querySelector(".preloader__progress-fill");
+const homeIdleTextSelector = ".hero__greeting, .hero__role, .hero__intro, .hero__name, .hero__skill";
+const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 const pageRoutes = {
   home: {
     file: "page/home.html",
@@ -30,6 +34,79 @@ let pageSwiper = null;
 let swiperResizeObserver = null;
 let swiperResizeFrame = 0;
 let pageRequestId = 0;
+let homeIdleEnabled = false;
+let homeIdleIndex = 0;
+let homeIdleTimer = 0;
+let homeIdleMotionTimer = 0;
+let homeIdleCurrentText = null;
+
+function stopHomeIdleMotion() {
+  homeIdleEnabled = false;
+  window.clearTimeout(homeIdleTimer);
+  window.clearTimeout(homeIdleMotionTimer);
+  homeIdleCurrentText?.classList.remove("home-idle-nudge");
+  homeIdleCurrentText = null;
+  homeIdleIndex = 0;
+}
+
+function scheduleHomeIdleMotion() {
+  window.clearTimeout(homeIdleTimer);
+  if (!homeIdleEnabled || reducedMotionPreference.matches) {
+    return;
+  }
+
+  homeIdleTimer = window.setTimeout(() => {
+    const textItems = pageContent.querySelectorAll(homeIdleTextSelector);
+    if (textItems.length === 0) {
+      return;
+    }
+
+    homeIdleCurrentText?.classList.remove("home-idle-nudge");
+    homeIdleCurrentText = textItems[homeIdleIndex % textItems.length];
+    homeIdleIndex += 1;
+    homeIdleCurrentText.classList.add("home-idle-nudge");
+
+    homeIdleMotionTimer = window.setTimeout(() => {
+      homeIdleCurrentText?.classList.remove("home-idle-nudge");
+      homeIdleCurrentText = null;
+    }, 360);
+    scheduleHomeIdleMotion();
+  }, 2000);
+}
+
+function startHomeIdleMotion() {
+  stopHomeIdleMotion();
+  if (reducedMotionPreference.matches) {
+    return;
+  }
+
+  homeIdleEnabled = true;
+  scheduleHomeIdleMotion();
+}
+
+function resetHomeIdleMotion() {
+  if (!homeIdleEnabled) {
+    return;
+  }
+
+  window.clearTimeout(homeIdleMotionTimer);
+  homeIdleCurrentText?.classList.remove("home-idle-nudge");
+  homeIdleCurrentText = null;
+  scheduleHomeIdleMotion();
+}
+
+/* User input restarts the idle delay so text only moves while Home is quiet. */
+["pointerdown", "pointermove", "keydown", "touchstart", "wheel"].forEach((eventName) => {
+  window.addEventListener(eventName, resetHomeIdleMotion, { passive: true });
+});
+
+reducedMotionPreference.addEventListener("change", () => {
+  if (reducedMotionPreference.matches) {
+    stopHomeIdleMotion();
+  } else if (pageContent.querySelector(".hero")) {
+    startHomeIdleMotion();
+  }
+});
 
 function updateActiveSwiper() {
   pageSwiper?.setBreakpoint();
@@ -89,7 +166,26 @@ async function loadPortfolioContent() {
 
     const copyright = document.querySelector('[data-copy="copyright"]');
     if (copyright && typeof hero?.copyright === "string" && hero.copyright.trim() !== "") {
-      copyright.textContent = hero.copyright;
+      const linkedName = "Solihul Hadi";
+      const nameIndex = hero.copyright.indexOf(linkedName);
+
+      if (nameIndex === -1) {
+        copyright.textContent = hero.copyright;
+      } else {
+        const profileLink = document.createElement("a");
+        profileLink.className = "site-footer__link";
+        profileLink.href = "https://github.com/solihulhadi141213";
+        profileLink.target = "_blank";
+        profileLink.rel = "noopener noreferrer";
+        profileLink.setAttribute("aria-label", "Solihul Hadi di GitHub");
+        profileLink.textContent = linkedName;
+
+        copyright.replaceChildren(
+          document.createTextNode(hero.copyright.slice(0, nameIndex)),
+          profileLink,
+          document.createTextNode(hero.copyright.slice(nameIndex + linkedName.length))
+        );
+      }
     }
 
     const navigationLabels = portfolioContent.navigation;
@@ -347,14 +443,24 @@ function renderProjectRecords(records, carousel, container = pageContent) {
 
 function getProjectSwiperOptions() {
   return {
-    slidesPerView: 2,
-    slidesPerGroup: 2,
-    spaceBetween: 16,
+    effect: "coverflow",
+    centeredSlides: true,
+    initialSlide: 2,
+    slidesPerView: "auto",
+    slidesPerGroup: 1,
+    spaceBetween: -25,
+    watchSlidesProgress: true,
+    coverflowEffect: {
+      rotate: 0,
+      stretch: -60,
+      depth: 180,
+      modifier: 1,
+      scale: 0.78,
+      slideShadows: false
+    },
     breakpoints: {
       701: {
-        slidesPerView: 3,
-        slidesPerGroup: 3,
-        spaceBetween: 36
+        spaceBetween: -160
       }
     }
   };
@@ -459,6 +565,8 @@ async function loadPage(pageKey) {
     return;
   }
 
+  stopHomeIdleMotion();
+
   if (activePageRequest) {
     activePageRequest.abort();
   }
@@ -490,7 +598,9 @@ async function loadPage(pageKey) {
       return;
     }
 
-    document.documentElement.classList.add("motion-ready");
+    if (!preloader || preloader.classList.contains("is-hidden")) {
+      document.documentElement.classList.add("motion-ready");
+    }
 
     if (pageKey === "project") {
       const stagingContainer = document.createElement("div");
@@ -523,6 +633,9 @@ async function loadPage(pageKey) {
     }
 
     document.title = route.title;
+    if (pageKey === "home") {
+      startHomeIdleMotion();
+    }
   } catch (error) {
     if (error.name === "AbortError") {
       return;
@@ -568,7 +681,25 @@ async function initializePortfolio() {
   await loadPage("home");
 }
 
-initializePortfolio();
+/* Dismiss on progress completion, with a timeout fallback for reduced motion. */
+function dismissPreloader() {
+  if (!preloader || preloader.classList.contains("is-hidden")) {
+    return;
+  }
+
+  preloader?.classList.add("is-hidden");
+  preloader?.setAttribute("aria-hidden", "true");
+  requestAnimationFrame(() => {
+    document.documentElement.classList.add("motion-ready");
+  });
+}
+
+preloaderProgress?.addEventListener("animationend", dismissPreloader, { once: true });
+window.setTimeout(dismissPreloader, 2100);
+
+initializePortfolio().catch((error) => {
+  console.error("The portfolio could not be initialized.", error);
+});
 
 /* Recalculate slide widths when the viewport changes, such as on device rotation. */
 window.addEventListener("resize", () => {

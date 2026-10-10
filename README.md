@@ -5,18 +5,22 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 ## Active Features
 
 - Hero portofolio dengan latar gradien marun-keunguan, foto utama, dan tipografi berlapis.
+- Preloader berlatar gelap menampilkan favicon, spinner, dan progress bar selama dua detik; setelah selesai, preloader menghilang dan animasi reveal halaman awal mulai terlihat.
 - Tata letak yang responsif untuk desktop dan perangkat mobile.
-- Navigasi mengambang dengan efek glassmorphism dan state aktif.
+- Navigasi mengambang dengan efek glassmorphism; pada layar mobile tombol menu aktif tampil terangkat seperti tombol floating.
 - Animasi teks bertahap dengan preferensi reduced motion.
+- Saat Home tidak menerima interaksi, teks hero bergeser lembut satu per satu dengan jeda dua detik; gerakan berhenti saat ada interaksi atau preferensi reduced motion aktif.
 - Teks hero dan label navigasi yang dapat disesuaikan lewat `data/portfolio.json`.
 - Font Geologica, Remix Icon, dan Swiper dimuat dari aset lokal yang ikut tersimpan di repositori, sehingga tetap tersedia pada GitHub Pages.
 - Favicon untuk browser, perangkat Apple, dan aplikasi Android menggunakan aset lokal.
 - Navigasi Home, Education, Skills, Project, dan Contact memuat halaman secara dinamis tanpa memuat ulang dokumen.
-- Riwayat pendidikan ditampilkan dari `data/education.json`.
-- Halaman Skills menampilkan carousel Swiper; pada mobile tiap slide memuat hingga empat keahlian dalam grid dua kolom dan dua baris, dan dapat digeser dengan usapan.
-- Halaman Project menampilkan tiga kartu per halaman di desktop dan dua di mobile; memilih kartu membuka dialog deskripsi proyek. Konten disiapkan sebelum ditampilkan agar transisi carousel tidak berkedip, dengan animasi kartu bertahap.
+- Nama Solihul Hadi pada copyright footer berwarna oranye dan tertaut ke profil GitHub.
+- Riwayat pendidikan ditampilkan dari `data/education.json` dalam susunan sticky note 2 × 2 berwarna `#ead8e8` pada desktop dan mobile, menggunakan font lokal Shadows Into Light. Ukuran sticky note dibatasi agar lebih proporsional pada desktop.
+- Halaman Skills menampilkan carousel Swiper tanpa latar kartu; gambar keahlian memakai bingkai claymorphism. Pada mobile tiap slide memuat hingga empat keahlian dalam grid dua kolom dan dua baris, dan dapat digeser dengan usapan.
+- Halaman Project menampilkan carousel coverflow dengan gambar proyek bertumpuk, tanpa garis pinggir, dan berbayang lembut; kartu aktif berukuran paling besar. Tiap proyek memiliki titik navigasi sendiri dan dapat dipilih satu per satu. Memilih gambar membuka dialog deskripsi tanpa garis pinggir agar tampil lebih alami.
 - Halaman Contact menampilkan email, telepon, tautan media sosial, dan viewer peta Google Maps responsif dari `data/contact.json`, dengan animasi transisi bertahap.
 - CI menjalankan `npm test` untuk memeriksa struktur data JSON setiap halaman, direktori aset gambar, serta keberadaan file gambar yang dirujuk oleh data.
+- Kartu Education memiliki efek hover yang mengangkat dan membesarkan sticky note pada desktop.
 - Metadata dasar untuk SEO.
 
 ## Requirements
@@ -24,6 +28,7 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - PHP/WAMP atau server HTTP lokal lain untuk melayani halaman dan berkas JSON.
 - Browser modern dengan dukungan CSS Grid, `backdrop-filter`, dan JavaScript.
 - Aset lokal yang tersedia: `assets/img/user/person.png`, font Geologica, dan Remix Icon di `assets/vendor/remixicon`.
+- Font Shadows Into Light tersedia secara lokal di `assets/fonts` beserta lisensi SIL Open Font License.
 - Favicon lokal dan manifest tersedia di `assets/img/pavicon`.
 - Berkas vendor Remix Icon dan Swiper tersedia di `assets/vendor`; `node_modules` hanya diperlukan untuk pengembangan lokal.
 

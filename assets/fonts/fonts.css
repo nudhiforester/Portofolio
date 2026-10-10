@@ -1147,6 +1147,15 @@
     font-weight: normal;
     font-style: normal;
 }
+/* Local handwritten font for Education sticky notes. */
+@font-face {
+  font-family: "Shadows Into Light";
+  src: url("./ShadowsIntoLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* Local Geologica font used throughout the portfolio. */
 @font-face {
   font-family: "Geologica";
