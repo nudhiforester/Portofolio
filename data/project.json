@@ -5,6 +5,11 @@
         "image" : "assets/img/project/simrs.png"
     },
     {
+        "project_name" : "SIMRS-Starter Template",
+        "description" : "Template starter untuk pengembang aplikasi SIMRS agar lebih mudah",
+        "image" : "assets/img/project/simrs-starter.png"
+    },
+    {
         "project_name" : "Pharmix V1.0.0",
         "description" : "Aplikasi Apotek dan praktek mandiri, terintegrasi SATUSEHAT dan pengelolaan keuangan yang lengkap",
         "image" : "assets/img/project/pharmix.png"
@@ -22,6 +27,21 @@
     {
         "project_name" : "Web Rumah Sakit",
         "description" : "Web Landing Page Rumah Sakit. Menggunakan html5 dan pustaka bootstrap5. Menampilkan informasi profil rumah sakit",
-        "image" : "assets/img/project/web-rumah-sakit.png"
+        "image" : "assets/img/project/web-rs.png"
+    },
+    {
+        "project_name" : "Sifarma",
+        "description" : "Sistem Informasi Manajemen Farmasi yang diterapkan pada rumah sakit. Terintegrasi SATUSEHAT dan Apotek Online",
+        "image" : "assets/img/project/sifarma.png"
+    },
+    {
+        "project_name" : "RMS",
+        "description" : "Radiology Managment System, merupakan aplikasi pengelolaan pelayanan radiologi. Dilengkapi dengan DICOM viewer yang canggih.",
+        "image" : "assets/img/project/rms.png"
+    },
+    {
+        "project_name" : "Website Kuningan Runners",
+        "description" : "Website komunitas lari, manajemen event dan pendaftaran online",
+        "image" : "assets/img/project/kngr.png"
     }
 ]

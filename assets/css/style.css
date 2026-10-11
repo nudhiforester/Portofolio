@@ -547,9 +547,27 @@ button {
   gap: 1rem;
   min-height: clamp(14rem, 36vh, 22rem);
   padding: clamp(0.8rem, 2vw, 1.5rem) 0.5rem;
+  border: 0;
   color: #fff3fa;
+  background: transparent;
+  font: inherit;
   text-align: center;
+  cursor: pointer;
   animation: education-card-in 650ms var(--ease-soft) both;
+}
+
+.skill-card:hover .skill-card__image-frame,
+.skill-card:focus-visible .skill-card__image-frame {
+  box-shadow:
+    0 0 1.5rem rgba(255, 220, 248, 0.6),
+    0 0 3rem rgba(238, 150, 211, 0.46),
+    0.75rem 0.75rem 1.35rem rgba(17, 8, 20, 0.28),
+    inset 0.15rem 0.15rem 0.3rem rgba(255, 255, 255, 0.75);
+}
+
+.skill-card:focus-visible {
+  outline: 2px solid #fff7ff;
+  outline-offset: 0.5rem;
 }
 
 .skill-card:nth-child(2) {
@@ -586,6 +604,7 @@ button {
     -0.55rem -0.55rem 1.1rem rgba(255, 231, 244, 0.2),
     inset 0.15rem 0.15rem 0.3rem rgba(255, 255, 255, 0.65),
     inset -0.15rem -0.15rem 0.35rem rgba(93, 51, 79, 0.2);
+  transition: box-shadow 300ms var(--ease-soft);
 }
 
 .skill-card__image {
@@ -595,6 +614,68 @@ button {
   object-fit: contain;
   border-radius: 1.2rem;
   filter: drop-shadow(0.25rem 0.35rem 0.25rem rgba(32, 15, 33, 0.28));
+}
+
+/* Native modal styles for vertical skill percentage charts. */
+.skill-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(92vw, 54rem);
+  max-width: none;
+  max-height: min(88vh, 44rem);
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 1.2rem;
+  color: var(--color-text);
+  background: linear-gradient(135deg, #382437, #69405b);
+  box-shadow: 0 2rem 5rem rgba(12, 6, 14, 0.5);
+}
+
+.skill-dialog[open] {
+  animation: project-dialog-in 300ms var(--ease-soft) both;
+}
+
+.skill-dialog::backdrop {
+  background: rgba(15, 8, 17, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.skill-dialog__content {
+  position: relative;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.skill-dialog__title {
+  margin: 0 3.5rem 1rem 0;
+  color: #fff7ff;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.skill-dialog__chart {
+  min-height: 21rem;
+}
+
+.skill-dialog__close {
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(35, 21, 34, 0.75);
+  cursor: pointer;
+}
+
+.skill-dialog__close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 .skills-pagination {
@@ -883,14 +964,14 @@ button {
   }
 }
 
-/* Contact details and an embedded Google Maps viewer. */
+/* Contact orbit carousel with a centered portrait and selected contact detail. */
 .contact-page {
   display: flex;
   min-height: 100vh;
   min-height: 100svh;
   flex-direction: column;
-  gap: clamp(2rem, 7vh, 4.5rem);
-  padding: 7vh max(7vw, 1.25rem) 24vh;
+  gap: clamp(1rem, 3vh, 2rem);
+  padding: 5vh max(7vw, 1.25rem) 19vh;
 }
 
 .contact-page__heading {
@@ -909,117 +990,163 @@ button {
   line-height: 1;
 }
 
-.contact-layout {
+.contact-carousel {
+  position: relative;
   display: grid;
   flex: 1;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr);
-  align-items: start;
-  gap: clamp(2rem, 6vw, 5rem);
-  min-width: 0;
+  min-height: 32rem;
+  place-items: center;
+}
+
+.contact-carousel__information {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  display: flex;
+  max-width: min(80vw, 24rem);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.contact-carousel__label {
+  color: rgba(255, 247, 255, 0.72);
+  font-size: 0.82rem;
+}
+
+.contact-carousel__value {
+  color: #fff7ff;
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  text-shadow: 0 0.25rem 0.8rem rgba(15, 7, 17, 0.55);
+}
+
+.contact-carousel__value:hover {
+  color: var(--color-accent);
+}
+
+.contact-carousel__stage {
+  position: relative;
+  width: min(60vw, 38rem);
+  aspect-ratio: 1;
+  margin-top: 1.25rem;
+}
+
+.contact-carousel__orbit {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(255, 247, 255, 0.3);
+  border-radius: 50%;
+}
+
+.contact-carousel__portrait {
+  position: absolute;
+  z-index: 1;
+  bottom: 4%;
+  left: 50%;
+  width: 42%;
+  height: 76%;
+  object-fit: contain;
+  object-position: bottom center;
+  transform: translateX(-50%);
 }
 
 .contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1rem, 2.2vh, 1.5rem);
+  position: absolute;
+  inset: 12%;
   margin: 0;
-  padding: clamp(0.25rem, 1vw, 0.75rem) 0 0;
+  padding: 0;
   list-style: none;
 }
 
 .contact-item {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: clamp(0.75rem, 1.4vw, 1.25rem);
-  color: #fff7ff;
+  position: absolute;
+  z-index: 2;
+  top: var(--contact-top);
+  left: var(--contact-left);
+  transform: translate(-50%, -50%);
 }
 
-.contact-item i {
-  flex: 0 0 auto;
-  font-size: clamp(1.6rem, 3vw, 2.35rem);
+.contact-item__button {
+  display: grid;
+  width: clamp(2.8rem, 4.5vw, 4.5rem);
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: #bfa7bd;
+  box-shadow: 0.5rem 0.6rem 0 rgba(16, 8, 17, 0.28);
+  cursor: pointer;
+  transition: transform 260ms var(--ease-soft), background-color 260ms var(--ease-soft), box-shadow 260ms var(--ease-soft);
+}
+
+.contact-item__button i {
+  font-size: clamp(1.45rem, 3vw, 2.2rem);
   line-height: 1;
 }
 
-.contact-item__link {
-  min-width: 0;
-  color: var(--color-accent);
-  font-size: clamp(1rem, 2.15vw, 1.8rem);
-  font-weight: 700;
-  letter-spacing: -0.055em;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-  text-decoration: none;
-  text-shadow: 0.08em 0.12em 0.08em rgba(18, 9, 20, 0.4);
-  transition: color 240ms var(--ease-soft);
+.contact-item.is-selected {
+  z-index: 3;
 }
 
-.contact-item__link:hover {
-  color: #fff7ff;
+.contact-item.is-selected .contact-item__button {
+  background: #d2bbd0;
+  box-shadow: 0.65rem 0.75rem 0 rgba(16, 8, 17, 0.3);
+  transform: scale(1.14);
 }
 
-.contact-item__link:focus-visible,
-.contact-map__link:focus-visible {
-  border-radius: 0.2rem;
+.contact-item__button:focus-visible,
+.contact-carousel__control:focus-visible,
+.contact-carousel__value:focus-visible {
   outline: 2px solid #fff7ff;
   outline-offset: 4px;
 }
 
-.contact-map {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  min-width: 0;
-  padding: clamp(0.8rem, 1.6vw, 1.25rem);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 1rem;
-  background: rgba(230, 204, 225, 0.1);
-  box-shadow: 0 1rem 2rem rgba(18, 9, 20, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+.contact-carousel__control {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  display: grid;
+  width: clamp(3.4rem, 6.5vw, 5.8rem);
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 247, 255, 0.65);
+  border-radius: 50%;
+  color: rgba(255, 247, 255, 0.68);
+  background: transparent;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 240ms var(--ease-soft), background-color 240ms var(--ease-soft);
 }
 
-.contact-map__heading {
-  margin: 0;
-  color: var(--color-accent);
-  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+.contact-carousel__control:hover {
+  color: #fff;
+  background: rgba(255, 247, 255, 0.12);
 }
 
-.contact-map__frame {
-  display: block;
-  width: 100%;
-  min-height: 18rem;
-  aspect-ratio: 4 / 3;
-  border: 0;
-  border-radius: 0.65rem;
-  background: rgba(15, 8, 17, 0.3);
+.contact-carousel__control i {
+  font-size: clamp(2rem, 3vw, 2.8rem);
 }
 
-.contact-map__link {
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  gap: 0.35rem;
-  color: #fff7ff;
-  font-size: 0.95rem;
-  text-decoration: none;
-  transition: color 240ms var(--ease-soft);
+.contact-carousel__control--previous {
+  left: 0;
 }
 
-.contact-map__link:hover {
-  color: var(--color-accent);
+.contact-carousel__control--next {
+  right: 0;
 }
 
-.contact-item:nth-child(2) {
-  --reveal-delay: 100ms;
-}
-
-.contact-item:nth-child(3) {
-  --reveal-delay: 200ms;
-}
-
-.contact-item:nth-child(4) {
-  --reveal-delay: 300ms;
+.contact-carousel--empty .contact-carousel__stage,
+.contact-carousel--empty .contact-carousel__control {
+  visibility: hidden;
 }
 
 /* Staggered reveal directions for the initial hero copy. */
@@ -1278,7 +1405,7 @@ button {
 
   .project-page {
     gap: 1.5rem;
-    padding: 7vh 6vw 30vh;
+    padding: 6vh 1rem calc(8rem + env(safe-area-inset-bottom));
   }
 
   .project-page__heading {
@@ -1290,8 +1417,13 @@ button {
     gap: 1.5rem;
   }
 
+  .project-swiper {
+    width: 100%;
+    overflow: hidden;
+  }
+
   .project-swiper .swiper-slide {
-    width: clamp(15rem, 78vw, 25rem);
+    width: min(82vw, 24rem);
   }
 
   .project-card {
@@ -1303,6 +1435,17 @@ button {
   .project-card__image-frame {
     aspect-ratio: 1.55 / 1;
     border-radius: 0.8rem;
+  }
+
+  .project-pagination {
+    gap: 0.3rem;
+    padding-inline: 0.25rem;
+  }
+
+  .project-pagination .swiper-pagination-bullet {
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: 0 0 auto;
   }
 
   .project-dialog {
@@ -1319,26 +1462,52 @@ button {
     font-size: clamp(2rem, 9vw, 3rem);
   }
 
-  .contact-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2rem;
+  .contact-carousel {
+    min-height: 68svh;
   }
 
-  .contact-list {
-    gap: 1rem;
+  .contact-carousel__stage {
+    width: min(76vw, 30rem);
+    margin-top: 2rem;
   }
 
-  .contact-item {
-    gap: 0.8rem;
+  .contact-carousel__portrait {
+    width: 45%;
+    height: 74%;
   }
 
-  .contact-item__link {
-    font-size: clamp(0.95rem, 4.1vw, 1.35rem);
+  .contact-item__button {
+    width: clamp(2.55rem, 11vw, 3.3rem);
   }
 
-  .contact-map__frame {
-    min-height: 14rem;
-    aspect-ratio: 16 / 11;
+  .contact-item__button i {
+    font-size: clamp(1.35rem, 5.4vw, 1.75rem);
+  }
+
+  .contact-carousel__control--previous {
+    left: -1rem;
+  }
+
+  .contact-carousel__control--next {
+    right: -1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .contact-carousel__stage {
+    width: 82vw;
+  }
+
+  .contact-carousel__control {
+    width: 2.8rem;
+  }
+
+  .contact-item__button {
+    width: 2.45rem;
+  }
+
+  .contact-item__button i {
+    font-size: 1.25rem;
   }
 }
 
@@ -1416,6 +1585,11 @@ button {
   .project-card,
   .project-card__image,
   .project-card__image-frame {
+    transition: none;
+  }
+
+  .contact-item__button,
+  .contact-carousel__control {
     transition: none;
   }
 }

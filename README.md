@@ -16,9 +16,9 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - Navigasi Home, Education, Skills, Project, dan Contact memuat halaman secara dinamis tanpa memuat ulang dokumen.
 - Nama Solihul Hadi pada copyright footer berwarna oranye dan tertaut ke profil GitHub.
 - Riwayat pendidikan ditampilkan dari `data/education.json` dalam susunan sticky note 2 × 2 berwarna `#ead8e8` pada desktop dan mobile, menggunakan font lokal Shadows Into Light. Ukuran sticky note dibatasi agar lebih proporsional pada desktop.
-- Halaman Skills menampilkan carousel Swiper tanpa latar kartu; gambar keahlian memakai bingkai claymorphism. Pada mobile tiap slide memuat hingga empat keahlian dalam grid dua kolom dan dua baris, dan dapat digeser dengan usapan.
-- Halaman Project menampilkan carousel coverflow dengan gambar proyek bertumpuk, tanpa garis pinggir, dan berbayang lembut; kartu aktif berukuran paling besar. Tiap proyek memiliki titik navigasi sendiri dan dapat dipilih satu per satu. Memilih gambar membuka dialog deskripsi tanpa garis pinggir agar tampil lebih alami.
-- Halaman Contact menampilkan email, telepon, tautan media sosial, dan viewer peta Google Maps responsif dari `data/contact.json`, dengan animasi transisi bertahap.
+- Halaman Skills menampilkan carousel Swiper tanpa latar kartu; gambar keahlian memakai bingkai claymorphism dengan shadow terang saat hover. Memilih kartu membuka modal grafik batang vertikal ApexCharts dengan warna berbeda untuk tiap statistik persentase di `data/skills.json`. Pada mobile tiap slide memuat hingga empat keahlian dalam grid dua kolom dan dua baris, dan dapat digeser dengan usapan.
+- Halaman Project menampilkan carousel coverflow dengan gambar proyek bertumpuk, tanpa garis pinggir, dan berbayang lembut; kartu aktif berukuran paling besar. Tiap proyek memiliki titik navigasi sendiri yang menyesuaikan layar mobile dan dapat dipilih satu per satu. Memilih gambar membuka dialog deskripsi tanpa garis pinggir agar tampil lebih alami.
+- Halaman Contact memakai carousel orbit dengan foto profil di tengah, hingga sepuluh ikon kontak dari `data/contact.json` yang tersebar merata tepat di garis lingkaran, tombol panah untuk berpindah, serta informasi dan tautan untuk ikon yang dipilih. Ukuran ikon menyesuaikan ruang dan ikon dengan data kosong tidak ditampilkan.
 - CI menjalankan `npm test` untuk memeriksa struktur data JSON setiap halaman, direktori aset gambar, serta keberadaan file gambar yang dirujuk oleh data.
 - Kartu Education memiliki efek hover yang mengangkat dan membesarkan sticky note pada desktop.
 - Metadata dasar untuk SEO.
@@ -31,6 +31,7 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 - Font Shadows Into Light tersedia secara lokal di `assets/fonts` beserta lisensi SIL Open Font License.
 - Favicon lokal dan manifest tersedia di `assets/img/pavicon`.
 - Berkas vendor Remix Icon dan Swiper tersedia di `assets/vendor`; `node_modules` hanya diperlukan untuk pengembangan lokal.
+- ApexCharts dipasang melalui `npm install` ke `node_modules` dan dimuat dari header halaman.
 
 ## Persiapan dan Instalasi
 
@@ -62,4 +63,4 @@ Landing page portofolio personal yang menampilkan identitas Solihul Hadi sebagai
 
 ## Dependensi
 
-Dependensi pengembangan yang tercatat di `package.json`: Bootstrap, Bootstrap Icons, jQuery, MDB UI Kit, Remix Icon, Select2, SweetAlert2, dan Swiper. Pengujian menggunakan test runner bawaan Node.js tanpa dependensi tambahan. Antarmuka menggunakan salinan lokal Remix Icon dan Swiper di `assets/vendor`; tidak ada dependensi yang dimuat dari CDN atau diminta dari `node_modules` ketika situs berjalan.
+Dependensi yang tercatat di `package.json`: ApexCharts, Bootstrap, Bootstrap Icons, jQuery, MDB UI Kit, Remix Icon, Select2, SweetAlert2, dan Swiper. ApexCharts dimuat dari `node_modules` setelah menjalankan `npm install`. Pengujian menggunakan test runner bawaan Node.js tanpa dependensi tambahan. Antarmuka memakai Remix Icon dan Swiper lokal di `assets/vendor`; tidak ada dependensi yang dimuat dari CDN.

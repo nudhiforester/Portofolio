@@ -31,6 +31,7 @@ const pageRoutes = {
 let portfolioContent = null;
 let activePageRequest = null;
 let pageSwiper = null;
+let skillChart = null;
 let swiperResizeObserver = null;
 let swiperResizeFrame = 0;
 let pageRequestId = 0;
@@ -252,8 +253,47 @@ function renderSkillRecords(records, carousel) {
   }
 
   const track = carousel.querySelector("[data-skills-track]");
-  if (!track) {
-    throw new Error("Skills page is missing its skills track.");
+  const skillsPage = carousel.closest(".skills-page") ?? pageContent;
+  let dialog = skillsPage.querySelector("[data-skill-dialog]");
+  if (!dialog) {
+    dialog = document.createElement("dialog");
+    dialog.className = "skill-dialog";
+    dialog.dataset.skillDialog = "";
+    dialog.setAttribute("aria-labelledby", "skill-dialog-title");
+
+    const content = document.createElement("div");
+    content.className = "skill-dialog__content";
+    const closeButton = document.createElement("button");
+    closeButton.className = "skill-dialog__close";
+    closeButton.type = "button";
+    closeButton.setAttribute("aria-label", "Tutup grafik");
+    closeButton.dataset.skillDialogClose = "";
+    const closeIcon = document.createElement("i");
+    closeIcon.className = "ri-close-line";
+    closeIcon.setAttribute("aria-hidden", "true");
+    closeButton.append(closeIcon);
+
+    const title = document.createElement("h2");
+    title.className = "skill-dialog__title";
+    title.id = "skill-dialog-title";
+    title.dataset.skillDialogTitle = "";
+    const chart = document.createElement("div");
+    chart.className = "skill-dialog__chart";
+    chart.dataset.skillChart = "";
+    chart.setAttribute("role", "img");
+    chart.setAttribute("aria-label", "Grafik batang vertikal statistik skill");
+
+    content.append(closeButton, title, chart);
+    dialog.append(content);
+    skillsPage.append(dialog);
+  }
+  const dialogTitle = dialog?.querySelector("[data-skill-dialog-title]");
+  const chartElement = dialog?.querySelector("[data-skill-chart]");
+  if (!track || !dialog || !dialogTitle || !chartElement) {
+    throw new Error("Skills page is missing its chart dialog markup.");
+  }
+  if (typeof window.ApexCharts !== "function") {
+    throw new Error("ApexCharts is not loaded. Install project dependencies with npm install.");
   }
 
   records.forEach((record) => {
@@ -262,11 +302,77 @@ function renderSkillRecords(records, carousel) {
       !Number.isFinite(record.order) ||
       typeof record.name_of_skill !== "string" ||
       typeof record.image_url !== "string" ||
+      !record.statistik ||
+      typeof record.statistik !== "object" ||
       record.name_of_skill.trim() === "" ||
-      record.image_url.trim() === ""
+      record.image_url.trim() === "" ||
+      Object.keys(record.statistik).length === 0 ||
+      Object.values(record.statistik).some((value) => !Number.isFinite(value) || value < 0 || value > 100)
     ) {
-      throw new Error("Each skill record must include a numeric order, name_of_skill, and image_url.");
+      throw new Error("Each skill record must include its name, image, and percentage statistics from 0 to 100.");
     }
+  });
+
+  const showSkillChart = async (record) => {
+    if (skillChart) {
+      skillChart.destroy();
+      skillChart = null;
+    }
+    chartElement.replaceChildren();
+    dialogTitle.textContent = `${record.name_of_skill} — Statistik Skill`;
+    dialog.showModal();
+
+    const labels = Object.keys(record.statistik).map((label) =>
+      label.replaceAll("_", " ").replace(/\b\p{L}/gu, (letter) => letter.toUpperCase())
+    );
+    skillChart = new window.ApexCharts(chartElement, {
+      chart: {
+        type: "bar",
+        height: 390,
+        toolbar: { show: false },
+        foreColor: "#fff7ff",
+        fontFamily: "Geologica, sans-serif",
+        background: "transparent",
+        animations: { easing: "easeinout", speed: 500 }
+      },
+      series: [{ name: "Persentase", data: Object.values(record.statistik) }],
+      colors: ["#ead8e8", "#f4a7c5", "#f7c873", "#8fd8c7", "#9ebcff", "#c3a0f4"],
+      plotOptions: { bar: { horizontal: false, distributed: true, columnWidth: "48%", borderRadius: 7 } },
+      dataLabels: {
+        enabled: true,
+        formatter: (value) => `${value}%`,
+        offsetY: -22,
+        style: { colors: ["#fff7ff"], fontSize: "12px" }
+      },
+      xaxis: {
+        categories: labels,
+        axisBorder: { show: false },
+        axisTicks: { show: false },
+        labels: { rotate: -25, trim: true, style: { colors: "#f4e8f2" } }
+      },
+      yaxis: {
+        min: 0,
+        max: 100,
+        tickAmount: 5,
+        labels: { formatter: (value) => `${Math.round(value)}%` }
+      },
+      grid: { borderColor: "rgba(255, 247, 255, 0.13)", strokeDashArray: 4 },
+      tooltip: { y: { formatter: (value) => `${value}%` } },
+      responsive: [{ breakpoint: 600, options: { chart: { height: 340 }, plotOptions: { bar: { columnWidth: "58%" } } } }]
+    });
+    await skillChart.render();
+  };
+
+  dialog.querySelector("[data-skill-dialog-close]")?.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) {
+      dialog.close();
+    }
+  });
+  dialog.addEventListener("close", () => {
+    skillChart?.destroy();
+    skillChart = null;
+    chartElement.replaceChildren();
   });
 
   const orderedRecords = records.slice().sort((first, second) => first.order - second.order);
@@ -278,8 +384,11 @@ function renderSkillRecords(records, carousel) {
     grid.className = "skills-slide-grid";
 
     orderedRecords.slice(index, index + 4).forEach((record) => {
-      const card = document.createElement("article");
+      const card = document.createElement("button");
       card.className = "skill-card";
+      card.type = "button";
+      card.setAttribute("aria-haspopup", "dialog");
+      card.setAttribute("aria-label", `Lihat statistik ${record.name_of_skill}`);
 
       const name = document.createElement("h2");
       name.className = "skill-card__name";
@@ -299,6 +408,12 @@ function renderSkillRecords(records, carousel) {
 
       imageFrame.append(image);
       card.append(name, imageFrame);
+      card.addEventListener("click", () => {
+        showSkillChart(record).catch((error) => {
+          console.error(`Skill chart could not be rendered for ${record.name_of_skill}.`, error);
+          dialog.close();
+        });
+      });
       grid.append(card);
     });
 
@@ -484,70 +599,95 @@ async function loadProjectData(signal, container = pageContent, initialize = tru
 }
 
 function renderContactData(record) {
-  if (
-    !record ||
-    typeof record.email !== "string" ||
-    typeof record.phone !== "string" ||
-    typeof record.instagram !== "string" ||
-    typeof record.tiktok !== "string" ||
-    typeof record.google_map !== "string" ||
-    typeof record.google_map_embed !== "string" ||
-    Object.values(record).some((value) => typeof value !== "string" || value.trim() === "")
-  ) {
-    throw new Error("Contact data must include email, phone, social links, and Google Maps URLs.");
-  }
-
+  const contactCarousel = pageContent.querySelector("[data-contact-carousel]");
   const contactList = pageContent.querySelector("[data-contact-list]");
-  const map = pageContent.querySelector("[data-contact-map]");
-  const mapLink = pageContent.querySelector("[data-contact-map-link]");
-  if (!contactList || !(map instanceof HTMLIFrameElement) || !mapLink) {
-    throw new Error("Contact page is missing its contact list or map viewer.");
+  const information = pageContent.querySelector("[data-contact-information]");
+  if (!record || !contactCarousel || !contactList || !information) {
+    throw new Error("Contact page is missing its contact carousel or contact data.");
   }
 
-  const isSecureUrl = (value) => {
-    try {
-      return new URL(value).protocol === "https:";
-    } catch {
-      return false;
-    }
-  };
-  if (!isSecureUrl(record.instagram) || !isSecureUrl(record.tiktok) ||
-    !isSecureUrl(record.google_map) || !isSecureUrl(record.google_map_embed)) {
-    throw new Error("Social and Google Maps links must use valid HTTPS URLs.");
-  }
-
-  const contacts = [
-    { label: "Email", value: record.email, href: `mailto:${record.email}`, icon: "ri-mail-line" },
-    { label: "Telepon", value: record.phone, href: `tel:${record.phone}`, icon: "ri-smartphone-line" },
-    { label: "Instagram", value: record.instagram, href: record.instagram, icon: "ri-instagram-line", external: true },
-    { label: "TikTok", value: record.tiktok, href: record.tiktok, icon: "ri-music-2-line", external: true }
+  const contactDefinitions = [
+    { key: "email", label: "Email", icon: "ri-mail-line", getHref: (value) => `mailto:${value}` },
+    { key: "phone", label: "Telepon", icon: "ri-smartphone-line", getHref: (value) => `tel:${value}` },
+    { key: "whatsapp", label: "WhatsApp", icon: "ri-whatsapp-line", external: true },
+    { key: "tiktok", label: "TikTok", icon: "ri-music-2-line", external: true },
+    { key: "youtube", label: "YouTube", icon: "ri-youtube-line", external: true },
+    { key: "x", label: "X", icon: "ri-twitter-x-line", external: true },
+    { key: "facebook", label: "Facebook", icon: "ri-facebook-circle-line", external: true },
+    { key: "linkedin", label: "LinkedIn", icon: "ri-linkedin-box-line", external: true },
+    { key: "instagram", label: "Instagram", icon: "ri-instagram-line", external: true },
+    { key: "google_map", label: "Google Maps", icon: "ri-map-pin-line", external: true }
   ];
+  const contacts = contactDefinitions
+    .filter(({ key }) => typeof record[key] === "string" && record[key].trim() !== "")
+    .map((definition) => ({ ...definition, value: record[definition.key].trim() }));
 
-  contacts.forEach((contact) => {
-    const item = document.createElement("li");
-    item.className = "contact-item reveal reveal--left";
-    item.dataset.reveal = "";
+  if (contacts.length === 0) {
+    information.textContent = "Belum ada informasi kontak yang tersedia.";
+    contactList.replaceChildren();
+    contactCarousel.classList.add("contact-carousel--empty");
+    return;
+  }
 
-    const icon = document.createElement("i");
-    icon.className = contact.icon;
-    icon.setAttribute("aria-hidden", "true");
+  let selectedIndex = 0;
+  const selectContact = (index) => {
+    selectedIndex = (index + contacts.length) % contacts.length;
+    const selected = contacts[selectedIndex];
+    contactList.querySelectorAll(".contact-item").forEach((item, itemIndex) => {
+      const active = itemIndex === selectedIndex;
+      item.classList.toggle("is-selected", active);
+      item.querySelector("button").setAttribute("aria-pressed", String(active));
+    });
 
+    information.replaceChildren();
+    const label = document.createElement("span");
+    label.className = "contact-carousel__label";
+    label.textContent = selected.label;
     const link = document.createElement("a");
-    link.className = "contact-item__link";
-    link.href = contact.href;
-    link.textContent = contact.value;
-    link.setAttribute("aria-label", `${contact.label}: ${contact.value}`);
-    if (contact.external) {
+    link.className = "contact-carousel__value";
+    const externalHref = /^https?:\/\//i.test(selected.value)
+      ? selected.value
+      : `https://${selected.value}`;
+    link.href = selected.getHref ? selected.getHref(selected.value) : externalHref;
+    link.textContent = selected.value;
+    link.setAttribute("aria-label", `${selected.label}: ${selected.value}`);
+    if (selected.external) {
       link.target = "_blank";
       link.rel = "noopener noreferrer";
     }
+    information.append(label, link);
+  };
 
-    item.append(icon, link);
+  contacts.forEach((contact, index) => {
+    const item = document.createElement("li");
+    item.className = "contact-item";
+    const angle = (index / contacts.length) * Math.PI * 2 - Math.PI / 2;
+    const positionX = 50 + Math.cos(angle) * 50;
+    const positionY = 50 + Math.sin(angle) * 50;
+    item.style.setProperty("--contact-left", `${positionX}%`);
+    item.style.setProperty("--contact-top", `${positionY}%`);
+
+    const button = document.createElement("button");
+    button.className = "contact-item__button";
+    button.type = "button";
+    button.setAttribute("aria-label", `Tampilkan ${contact.label}`);
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => selectContact(index));
+    const icon = document.createElement("i");
+    icon.className = contact.icon;
+    icon.setAttribute("aria-hidden", "true");
+    button.append(icon);
+    item.append(button);
     contactList.append(item);
   });
 
-  map.src = record.google_map_embed;
-  mapLink.href = record.google_map;
+  contactCarousel.querySelector("[data-contact-previous]").addEventListener("click", () => {
+    selectContact(selectedIndex - 1);
+  });
+  contactCarousel.querySelector("[data-contact-next]").addEventListener("click", () => {
+    selectContact(selectedIndex + 1);
+  });
+  selectContact(selectedIndex);
 }
 
 async function loadContactData(signal) {
@@ -566,6 +706,8 @@ async function loadPage(pageKey) {
   }
 
   stopHomeIdleMotion();
+  skillChart?.destroy();
+  skillChart = null;
 
   if (activePageRequest) {
     activePageRequest.abort();

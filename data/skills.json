@@ -2,31 +2,105 @@
     {
         "order" : 1,
         "name_of_skill" : "PHP",
+        "statistik" : {
+            "sintaksis"           : 80,
+            "algoritma"           : 90,
+            "maintenance"         : 75,
+            "optimalisasi"        : 95,
+            "keamanan"            : 98,
+            "penanganan_kesalahan": 65
+        },
         "image_url" : "assets/img/skills/php.jpg"
     },
     {
         "order" : 2,
         "name_of_skill" : "HTML",
+        "statistik" : {
+            "sintaksis"           : 92,
+            "algoritma"           : 98,
+            "maintenance"         : 90,
+            "optimalisasi"        : 90,
+            "keamanan"            : 85,
+            "penanganan_kesalahan": 99
+        },
         "image_url" : "assets/img/skills/html.jpg"
     },
     {
         "order" : 3,
         "name_of_skill" : "CSS",
+        "statistik" : {
+            "sintaksis"           : 92,
+            "algoritma"           : 98,
+            "maintenance"         : 90,
+            "optimalisasi"        : 90,
+            "keamanan"            : 85,
+            "penanganan_kesalahan": 99
+        },
         "image_url" : "assets/img/skills/css.jpg"
     },
     {
         "order" : 4,
         "name_of_skill" : "Javascript",
+        "statistik" : {
+            "sintaksis"           : 92,
+            "algoritma"           : 98,
+            "maintenance"         : 90,
+            "optimalisasi"        : 90,
+            "keamanan"            : 85,
+            "penanganan_kesalahan": 99
+        },
         "image_url" : "assets/img/skills/javascript.png"
     },
     {
         "order" : 5,
         "name_of_skill" : "Python",
+        "statistik" : {
+            "sintaksis"           : 92,
+            "algoritma"           : 98,
+            "maintenance"         : 90,
+            "optimalisasi"        : 90,
+            "keamanan"            : 85,
+            "penanganan_kesalahan": 99
+        },
         "image_url" : "assets/img/skills/python.jpg"
     },
     {
         "order" : 6,
         "name_of_skill" : "Node Js",
-        "image_url" : "assets/img/skills/node_js.jpg"
+        "statistik" : {
+            "sintaksis"           : 75,
+            "algoritma"           : 50,
+            "maintenance"         : 55,
+            "optimalisasi"        : 60,
+            "keamanan"            : 75,
+            "penanganan_kesalahan": 60
+        },
+        "image_url" : "assets/img/skills/node_js.png"
+    },
+    {
+        "order" : 7,
+        "name_of_skill" : "SQL",
+        "statistik" : {
+            "sintaksis"           : 60,
+            "algoritma"           : 80,
+            "maintenance"         : 90,
+            "optimalisasi"        : 90,
+            "keamanan"            : 75,
+            "penanganan_kesalahan": 80
+        },
+        "image_url" : "assets/img/skills/sql.jpg"
+    },
+    {
+        "order" : 8,
+        "name_of_skill" : "Kotlin",
+        "statistik" : {
+            "sintaksis"           : 75,
+            "algoritma"           : 60,
+            "maintenance"         : 55,
+            "optimalisasi"        : 80,
+            "keamanan"            : 90,
+            "penanganan_kesalahan": 55
+        },
+        "image_url" : "assets/img/skills/kotlin.jpg"
     }
 ]

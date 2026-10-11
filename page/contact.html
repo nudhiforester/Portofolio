@@ -5,23 +5,21 @@
     <span>Contact</span>
   </h1>
 
-  <div class="contact-layout">
-    <ul class="contact-list" data-contact-list aria-label="Informasi kontak"></ul>
+  <div class="contact-carousel reveal reveal--right" data-contact-carousel aria-label="Carousel informasi kontak">
+    <button class="contact-carousel__control contact-carousel__control--previous" type="button" aria-label="Kontak sebelumnya" data-contact-previous>
+      <i class="ri-arrow-left-double-line" aria-hidden="true"></i>
+    </button>
 
-    <section class="contact-map reveal reveal--right" aria-labelledby="contact-map-title" data-reveal>
-      <h2 class="contact-map__heading" id="contact-map-title">Lokasi</h2>
-      <iframe
-        class="contact-map__frame"
-        title="Peta lokasi Solihul Hadi"
-        loading="lazy"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-        data-contact-map
-      ></iframe>
-      <a class="contact-map__link" href="#" target="_blank" rel="noopener noreferrer" data-contact-map-link>
-        Buka di Google Maps
-        <i class="ri-external-link-line" aria-hidden="true"></i>
-      </a>
-    </section>
+    <p class="contact-carousel__information" data-contact-information aria-live="polite"></p>
+
+    <div class="contact-carousel__stage">
+      <div class="contact-carousel__orbit" aria-hidden="true"></div>
+      <img class="contact-carousel__portrait" src="assets/img/user/person.png" alt="" />
+      <ul class="contact-list" data-contact-list aria-label="Informasi kontak"></ul>
+    </div>
+
+    <button class="contact-carousel__control contact-carousel__control--next" type="button" aria-label="Kontak berikutnya" data-contact-next>
+      <i class="ri-arrow-right-double-line" aria-hidden="true"></i>
+    </button>
   </div>
 </section>
